@@ -5,20 +5,22 @@
 //  Created by 양승현 on 2023/07/18.
 //
 
-import Foundation
+import UIKit
 
 /// UIView's layout support
 protocol LayoutSupport {
-  /// Add subviews in root view
-  func addSubviews()
-  
   /// Set subviews constraints in root view
   func setConstraints()
 }
 
-extension LayoutSupport {
-  func setupUI() {
-    addSubviews()
+extension LayoutSupport where Self: UIView {
+  func setupUI(with subviews: UIView...) {
+    addSubviews(subviews)
     setConstraints()
+  }
+  
+  /// Add subviews in root view
+  func addSubviews(_ views: UIView...) {
+    self.addSubviews(views)
   }
 }
