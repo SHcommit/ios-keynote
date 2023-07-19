@@ -10,9 +10,9 @@ struct GrayscaleRange {
   // MARK: - Properties
   private var value: Int
   
-  private let minGrayScale = AppSetting.UIConstGScale.minValue
+  private let minGrayScale = Int(AppSetting.UIConstGScale.minValue)
   
-  private let maxGrayScale = AppSetting.UIConstGScale.maxValue
+  private let maxGrayScale = Int(AppSetting.UIConstGScale.maxValue)
   
   var wrappedValue: Int {
     get { value }

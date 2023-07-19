@@ -12,7 +12,7 @@ struct AlphaModel {
   private lazy var availableRange: ClosedRange = minValue...maxValue
   
   // MARK: - Properties
-  private var alpha: UInt8
+  private(set) var alpha: UInt8
   
   // MARK: - Lifecycle
   init(alpha: UInt8) {

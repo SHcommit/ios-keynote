@@ -9,10 +9,10 @@ struct RGBAModel {
   @GrayscaleRange var red: Int
   @GrayscaleRange var green: Int
   @GrayscaleRange var blue: Int
-  var alpha: AlphaModel
+  private var alpha: AlphaModel
 }
 
-// MARK: - Properties
+// MARK: - Helper
 extension RGBAModel {
   mutating func isValidAlphaRange(_ target: UInt8) -> Bool {
     return alpha.isValidRange(target)
@@ -24,6 +24,10 @@ extension RGBAModel {
   
   mutating func minusAlpha() {
     alpha.minusAlpha()
+  }
+  
+  var alphaValue: UInt8 {
+    alpha.alpha
   }
 }
 
