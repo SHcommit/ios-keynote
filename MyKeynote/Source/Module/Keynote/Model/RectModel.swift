@@ -6,6 +6,8 @@
 //
 
 final class RectModel {
+  // MARK: - Constant
+  typealias AlphaConstant = AppSetting.UIConstAlpha
   // MARK: - Properties
   private let uniqueID: String
   private let width: Int
@@ -21,14 +23,24 @@ final class RectModel {
 
 extension RectModel {
   func plusAlpha() {
-    rgba.alpha.plusAlpha()
+    rgba.plusAlpha()
   }
   
   func minusAlpha() {
-    rgba.alpha.minusAlpha()
+    rgba.minusAlpha()
   }
   
-  var isAlphaMutableState: Bool {
-    rgba
+  var isMinusAlphaMutableState: Bool {
+    let minAlpha = AlphaConstant.minAlpha
+    let curAlpha = rgba.alphaValue
+    
+    return minAlpha != curAlpha
+  }
+  
+  var isPlusAlphaMutableState: Bool {
+    let maxAlpha = AlphaConstant.maxAlpha
+    let curAlpha = rgba.alphaValue
+    
+    return maxAlpha != curAlpha
   }
 }
