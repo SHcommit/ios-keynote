@@ -8,8 +8,9 @@
 final class RGBRandomGenerator: RandomGeneratable {
   // MARK: - Constant
   typealias RandomValueType = UInt8
+  typealias Constant = AppSetting.UIConstGScale
   
   // MARK: - Properties
-  private(set) var minValue: RandomValueType = 0
-  private(set) var maxValue: RandomValueType = 255
+  private(set) var minValue: RandomValueType = Constant.minValue
+  private(set) var maxValue: RandomValueType = Constant.maxValue
 }
