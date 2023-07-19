@@ -26,11 +26,11 @@ extension AlphaModel {
     return availableRange.contains(target)
   }
   
-  mutating func upAlphaValue() {
+  mutating func plusAlpha() {
     if isValidRange(alpha+1) { alpha += 1 }
   }
   
-  mutating func downAlphaValue() {
+  mutating func minusAlpha() {
     if isValidRange(alpha-1) { alpha -= 1 }
   }
 }

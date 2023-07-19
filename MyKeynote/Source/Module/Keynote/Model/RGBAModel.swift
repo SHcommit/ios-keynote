@@ -18,11 +18,11 @@ extension RGBAModel {
     return alpha.isValidRange(target)
   }
   
-  mutating func upAlhpaValue() {
+  mutating func plusAlpha() {
     alpha.upAlphaValue()
   }
   
-  mutating func downAlphaValue() {
+  mutating func minusAlpha() {
     alpha.downAlphaValue()
   }
 }
