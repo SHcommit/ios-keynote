@@ -19,11 +19,11 @@ extension RGBAModel {
   }
   
   mutating func plusAlpha() {
-    alpha.upAlphaValue()
+    alpha.plusAlpha()
   }
   
   mutating func minusAlpha() {
-    alpha.downAlphaValue()
+    alpha.minusAlpha()
   }
 }
 
