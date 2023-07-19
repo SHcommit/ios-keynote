@@ -10,6 +10,6 @@ final class AlphaRandomGenerator: RandomGeneratable {
   typealias RandomValueType = UInt8
   
   // MARK: - Properties
-  private(set) var minValue: RandomValueType = 0
+  private(set) var minValue: RandomValueType = 1
   private(set) var maxValue: RandomValueType = 10
 }
