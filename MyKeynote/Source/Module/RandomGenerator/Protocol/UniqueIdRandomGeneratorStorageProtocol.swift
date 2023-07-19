@@ -9,7 +9,7 @@ protocol UniqueIdRandomGeneratorStorageProtocol {
   associatedtype UniqueId
   
   static var shared: UniqueIdRandomGeneratorStorage { get }
-  var uniqueIdList: [UniqueId] { get }
+  var uniqueIdStorage: [UniqueId] { get }
   var randomGenerator: UniqueIDRandomGenerator { get }
   
   func create() -> UniqueId

@@ -12,7 +12,7 @@ class UniqueIdRandomGeneratorStorage: UniqueIdRandomGeneratorStorageProtocol {
   // MARK: - Properites
   static let shared = UniqueIdRandomGeneratorStorage()
   
-  private(set) var uniqueIdList: [UniqueId] = []
+  private(set) var uniqueIdStorage: [UniqueId] = []
   
   private(set) var randomGenerator = UniqueIDRandomGenerator()
   
@@ -26,19 +26,19 @@ extension UniqueIdRandomGeneratorStorage {
     while true {
       let specificId = randomGenerator.randValue()
       if contain(uniqueId: specificId) { continue }
-      uniqueIdList.append(specificId)
+      uniqueIdStorage.append(specificId)
       return specificId
     }
   }
   
   func delete(uniqueId: UniqueId) {
-    guard let idx = uniqueIdList.firstIndex(of: uniqueId) else {
+    guard let idx = uniqueIdStorage.firstIndex(of: uniqueId) else {
       return
     }
-    uniqueIdList.remove(at: idx)
+    uniqueIdStorage.remove(at: idx)
   }
   
   func contain(uniqueId: UniqueId) -> Bool {
-    return uniqueIdList.contains(uniqueId)
+    return uniqueIdStorage.contains(uniqueId)
   }
 }

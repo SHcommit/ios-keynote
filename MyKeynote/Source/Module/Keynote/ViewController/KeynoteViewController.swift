@@ -22,6 +22,13 @@ class KeynoteViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    // Do any additional setup after loading the view.
+    print( UniqueIDRandomGenerator().randValue())
+    print("test")
+    _=(0..<5).map { _ in
+      let a = UniqueIdRandomGeneratorStorage.shared
+      let t = a.create()
+      print(t)
+
     }
+  }
 }
