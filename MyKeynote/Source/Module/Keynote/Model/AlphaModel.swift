@@ -34,3 +34,10 @@ extension AlphaModel {
     if isValidRange(alpha-1) { alpha -= 1 }
   }
 }
+
+// MARK: - CustomStringConvertible
+extension AlphaModel: CustomStringConvertible {
+  var description: String {
+    "Alpha: \(alpha)"
+  }
+}

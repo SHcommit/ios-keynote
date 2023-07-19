@@ -28,3 +28,10 @@ extension RGBAModel {
     alpha.downAlphaValue()
   }
 }
+
+// MARK: - CustomStringConvertible
+extension RGBAModel: CustomStringConvertible {
+  var description: String {
+    "R:\(red), G:\(green), B:\(blue), \(alpha.description)"
+  }
+}
