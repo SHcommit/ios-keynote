@@ -5,8 +5,6 @@
 //  Created by 양승현 on 2023/07/19.
 //
 
-import Foundation
-
 struct RGBAModel {
   @GrayscaleRange var red: Int
   @GrayscaleRange var green: Int
