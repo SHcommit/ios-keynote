@@ -13,6 +13,7 @@ protocol UniqueIdRandomGeneratorStorageProtocol {
   var randomGenerator: UniqueIDRandomGenerator { get }
   
   func create() -> UniqueId
+  func create(from: RectModelAbstractFactory) -> UniqueId
   func delete(uniqueId: UniqueId)
   func contain(uniqueId: UniqueId) -> Bool
 }
