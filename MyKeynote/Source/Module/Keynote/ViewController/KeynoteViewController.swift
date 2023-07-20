@@ -7,14 +7,26 @@
 
 import UIKit
 import OSLog
+import Combine
 
 class KeynoteViewController: UIViewController {
   // MARK: - Properties
   private let keynoteView = KeynoteView()
   
+  private var slideManager: (SlideManagerType & KeynoteSlideMenuDataSource)!
+  
+  private lazy var inputEvent = SlideManager.Input()
+  
+  private var subscriptions = Set<AnyCancellable>()
+  
   // MARK: - Lifecycle
-  convenience init() {
-    self.init(nibName: nil, bundle: nil)
+  init(slideManager: SlideManagerType & KeynoteSlideMenuDataSource) {
+    super.init(nibName: nil, bundle: nil)
+    self.slideManager = slideManager
+  }
+  
+  required init?(coder: NSCoder) {
+    super.init(coder: coder)
   }
   
   override func loadView() {
@@ -24,6 +36,27 @@ class KeynoteViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     missionWeek3_1()
+    bind()
+  }
+  
+  // MARK: - Helper
+  func bind() {
+    let output = slideManager.transform(input: inputEvent)
+    
+    output.sink { [weak self] in
+      self?.render($0)
+    }.store(in: &subscriptions)
+  }
+  
+  private func render(_ state: SlideManager.State) {
+    switch state {
+    case .none:
+      break
+    case .updateRectColor:
+      break
+    case .updateRectAlpha(let isMinusAlphaMutableState, let isPlusAlphaMutableState):
+      break
+    }
   }
 }
 
