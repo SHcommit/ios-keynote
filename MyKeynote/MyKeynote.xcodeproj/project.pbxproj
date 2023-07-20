@@ -34,6 +34,9 @@
 		153D6A2C2A682C3800093A37 /* RGBAModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153D6A2B2A682C3800093A37 /* RGBAModel.swift */; };
 		153D6A2E2A68304D00093A37 /* AlphaModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153D6A2D2A68304D00093A37 /* AlphaModel.swift */; };
 		153D6A302A68319800093A37 /* GrayscaleRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153D6A2F2A68319800093A37 /* GrayscaleRange.swift */; };
+		15BF0B122A6873A000D6B69B /* SlideViewAbstractFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BF0B112A6873A000D6B69B /* SlideViewAbstractFactory.swift */; };
+		15BF0B142A68C45800D6B69B /* RectModelAbstractFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BF0B132A68C45800D6B69B /* RectModelAbstractFactory.swift */; };
+		15BF0B162A68C5D600D6B69B /* RectModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BF0B152A68C5D600D6B69B /* RectModelFactory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +88,9 @@
 		153D6A2B2A682C3800093A37 /* RGBAModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGBAModel.swift; sourceTree = "<group>"; };
 		153D6A2D2A68304D00093A37 /* AlphaModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlphaModel.swift; sourceTree = "<group>"; };
 		153D6A2F2A68319800093A37 /* GrayscaleRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrayscaleRange.swift; sourceTree = "<group>"; };
+		15BF0B112A6873A000D6B69B /* SlideViewAbstractFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideViewAbstractFactory.swift; sourceTree = "<group>"; };
+		15BF0B132A68C45800D6B69B /* RectModelAbstractFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectModelAbstractFactory.swift; sourceTree = "<group>"; };
+		15BF0B152A68C5D600D6B69B /* RectModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectModelFactory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,6 +189,7 @@
 		150411652A65C6470050668C /* Keynote */ = {
 			isa = PBXGroup;
 			children = (
+				15BF0B102A68737A00D6B69B /* Factory */,
 				150411792A6717A90050668C /* Model */,
 				150411702A65CC2D0050668C /* View */,
 				150411662A65C6510050668C /* ViewController */,
@@ -232,6 +239,7 @@
 				153D6A2D2A68304D00093A37 /* AlphaModel.swift */,
 				153D6A2F2A68319800093A37 /* GrayscaleRange.swift */,
 				1535B5F62A684F1500AE218B /* RectModel.swift */,
+				15BF0B152A68C5D600D6B69B /* RectModelFactory.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -283,6 +291,15 @@
 				153D6A1D2A67838A00093A37 /* UInt32+.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		15BF0B102A68737A00D6B69B /* Factory */ = {
+			isa = PBXGroup;
+			children = (
+				15BF0B112A6873A000D6B69B /* SlideViewAbstractFactory.swift */,
+				15BF0B132A68C45800D6B69B /* RectModelAbstractFactory.swift */,
+			);
+			path = Factory;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -420,6 +437,7 @@
 				150411382A65C46B0050668C /* KeynoteViewController.swift in Sources */,
 				1504116D2A65C77A0050668C /* LayoutSupport.swift in Sources */,
 				150411782A65CF7F0050668C /* UIView+.swift in Sources */,
+				15BF0B162A68C5D600D6B69B /* RectModelFactory.swift in Sources */,
 				153D6A282A67DDCD00093A37 /* UniqueIdRandomGenerator.swift in Sources */,
 				153D6A2C2A682C3800093A37 /* RGBAModel.swift in Sources */,
 				153D6A202A67DD3A00093A37 /* AlphaRandomGenerator.swift in Sources */,
@@ -429,11 +447,13 @@
 				1504116B2A65C73E0050668C /* ConvenienceInit.swift in Sources */,
 				153D6A162A67211B00093A37 /* UniqueIdRandomGeneratorStorage.swift in Sources */,
 				153D6A2A2A68248200093A37 /* UniqueIdRandomGeneratorStorageProtocol.swift in Sources */,
+				15BF0B122A6873A000D6B69B /* SlideViewAbstractFactory.swift in Sources */,
 				150411342A65C46B0050668C /* AppDelegate.swift in Sources */,
 				153D6A1C2A677BD200093A37 /* String+.swift in Sources */,
 				153D6A2E2A68304D00093A37 /* AlphaModel.swift in Sources */,
 				150411362A65C46B0050668C /* SceneDelegate.swift in Sources */,
 				153D6A1E2A67838A00093A37 /* UInt32+.swift in Sources */,
+				15BF0B142A68C45800D6B69B /* RectModelAbstractFactory.swift in Sources */,
 				1504117C2A6717F10050668C /* RandomGeneratable.swift in Sources */,
 				153D6A262A67DDA000093A37 /* AlphabetRandomGenerator.swift in Sources */,
 				153D6A302A68319800093A37 /* GrayscaleRange.swift in Sources */,
