@@ -31,6 +31,15 @@ extension UniqueIdRandomGeneratorStorage {
     }
   }
   
+  func create(from: RectModelAbstractFactory) -> UniqueId {
+    while true {
+      let specificId = from.makeUniqueIdRandomValue()
+      if contain(uniqueId: specificId) { continue }
+      uniqueIdStorage.append(specificId)
+      return specificId
+    }
+  }
+  
   func delete(uniqueId: UniqueId) {
     guard let idx = uniqueIdStorage.firstIndex(of: uniqueId) else {
       return
