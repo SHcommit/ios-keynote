@@ -12,7 +12,7 @@ final class RectModel {
   // MARK: - Properties
   private let uniqueID: String
   
-  private let width: Int
+  private(set) var width: Int
   
   private var rgba: RGBAModel
   
