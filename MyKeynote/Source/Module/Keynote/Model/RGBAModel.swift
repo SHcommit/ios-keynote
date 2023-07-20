@@ -6,10 +6,22 @@
 //
 
 struct RGBAModel {
-  @GrayscaleRange var red: Int
-  @GrayscaleRange var green: Int
-  @GrayscaleRange var blue: Int
+  @GrayscaleRange var red: UInt8
+  @GrayscaleRange var green: UInt8
+  @GrayscaleRange var blue: UInt8
   private var alpha: AlphaModel
+  
+  init(
+    red: UInt8,
+    green: UInt8,
+    blue: UInt8,
+    alpha: AlphaModel
+  ) {
+    self.red = red
+    self.green = green
+    self.blue = blue
+    self.alpha = alpha
+  }
 }
 
 // MARK: - Helper

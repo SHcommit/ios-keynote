@@ -8,9 +8,12 @@
 final class RectModel {
   // MARK: - Constant
   typealias AlphaConstant = AppSetting.UIConstAlpha
+  
   // MARK: - Properties
   private let uniqueID: String
+  
   private let width: Int
+  
   private var rgba: RGBAModel
   
   // MARK: - Lifecycle
@@ -21,6 +24,7 @@ final class RectModel {
   }
 }
 
+// MARK: - Helper
 extension RectModel {
   func plusAlpha() {
     rgba.plusAlpha()
@@ -42,5 +46,12 @@ extension RectModel {
     let curAlpha = rgba.alphaValue
     
     return maxAlpha != curAlpha
+  }
+}
+
+// MARK: - CustomStringConvertible
+extension RectModel: CustomStringConvertible {
+  var description: String {
+    "(\(uniqueID.description)), Side:\(width), \(rgba.description)"
   }
 }

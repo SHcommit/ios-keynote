@@ -8,19 +8,19 @@
 @propertyWrapper
 struct GrayscaleRange {
   // MARK: - Properties
-  private var value: Int
+  private var value: UInt8
   
-  private let minGrayScale = Int(AppSetting.UIConstGScale.minValue)
+  private let minGrayScale = AppSetting.UIConstGScale.minValue
   
-  private let maxGrayScale = Int(AppSetting.UIConstGScale.maxValue)
+  private let maxGrayScale = AppSetting.UIConstGScale.maxValue
   
-  var wrappedValue: Int {
+  var wrappedValue: UInt8 {
     get { value }
     set { updateValue(newValue) }
   }
   
   // MARK: - Lifecycle
-  init(wrappedValue: Int) {
+  init(wrappedValue: UInt8) {
     value = minGrayScale
     updateValue(wrappedValue)
   }
@@ -28,7 +28,7 @@ struct GrayscaleRange {
 
 // MARK: - Private helper
 extension GrayscaleRange {
-  private mutating func updateValue(_ newValue: Int) {
+  private mutating func updateValue(_ newValue: UInt8) {
     if newValue < minGrayScale {
       value = minGrayScale
     } else if newValue > maxGrayScale {
