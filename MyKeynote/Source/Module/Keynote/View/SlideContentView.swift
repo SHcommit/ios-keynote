@@ -11,7 +11,7 @@ final class SlideContentView: UIView {
   // MARK: - Lifecycle
   override init(frame: CGRect) {
     super.init(frame: frame)
-    backgroundColor = .gray
+    backgroundColor = .systemGray2
     translatesAutoresizingMaskIntoConstraints = false
   }
   

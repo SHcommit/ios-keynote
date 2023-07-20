@@ -11,7 +11,7 @@ final class SlideMenuView: UIView {
   // MARK: - Lifecycle
   override init(frame: CGRect) {
     super.init(frame: frame)
-    backgroundColor = .lightGray
+    backgroundColor = .systemGray6
     translatesAutoresizingMaskIntoConstraints = false
   }
   
