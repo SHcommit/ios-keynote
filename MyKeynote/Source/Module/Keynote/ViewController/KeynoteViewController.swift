@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import OSLog
 
 class KeynoteViewController: UIViewController {
   // MARK: - Properties
@@ -22,13 +23,37 @@ class KeynoteViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    print( UniqueIDRandomGenerator().randValue())
-    print("test")
-    _=(0..<5).map { _ in
-      let a = UniqueIdRandomGeneratorStorage.shared
-      let t = a.create()
-      print(t)
+    missionWeek3_1()
+  }
+}
 
+fileprivate extension KeynoteViewController {
+  func missionWeek3_1() {
+    let rectModelFactory = RectModelFactory()
+    let uniqueIdStorage = UniqueIdRandomGeneratorStorage
+      .shared
+    
+    let rectModelDescriptions = (0..<4).map {
+      let uniqueId = uniqueIdStorage.create(
+        from: rectModelFactory)
+      let rgb = rectModelFactory.makeRGBRandomValue()
+      let alpha = rectModelFactory.makeAlphaRandomValue()
+      
+      let alphaModel = AlphaModel(alpha: alpha)
+      
+      let rgbaModel = RGBAModel(
+        red: rgb.R,
+        green: rgb.G,
+        blue: rgb.B,
+        alpha: alphaModel)
+      let rectModel = RectModel(
+        uniqueID: uniqueId,
+        width: Int.random(in: 100...400),
+        rgba: rgbaModel)
+      return "Rect\($0+1) " + rectModel.description
+    }
+    rectModelDescriptions.forEach {
+      os_log("%@",type: .default, $0)
     }
   }
 }
