@@ -1,5 +1,5 @@
 //
-//  StateView.swift
+//  AlphaStateView.swift
 //  MyKeynote
 //
 //  Created by 양승현 on 2023/07/24.
@@ -10,6 +10,11 @@ import UIKit
 final class AlphaStateView: UIView {
   // MARK: - Constant
   struct Constant {
+    static let radius: CGFloat = 7
+    static let borderColor: CGColor = UIColor.lightGray.cgColor
+    static let borderWidth: CGFloat = 0.5
+    static let bgColor: UIColor = .white
+    
     enum StateLabel {
       static let textSize: CGFloat = 10
       static let spacing: UISpacing = .init(trailing:7)
@@ -25,10 +30,10 @@ final class AlphaStateView: UIView {
   }
   
   // MARK: - Lifecycle
-  private override init(frame: CGRect) {
+  private override init(frame: CGRect)  {
     super.init(frame: frame)
-    translatesAutoresizingMaskIntoConstraints = false
-    setupUI(with: stateLabel)
+    configureUI()
+    setupSubviewUI(with: stateLabel)
   }
   
   convenience init() {
@@ -43,7 +48,17 @@ final class AlphaStateView: UIView {
 // MARK: - Helper
 extension AlphaStateView {
   func updateStateLabel(with text: String) {
-    stateLabel.text = text
+    DispatchQueue.main.async {
+      self.stateLabel.text = text
+    }
+  }
+  
+  private func configureUI() {
+    translatesAutoresizingMaskIntoConstraints = false
+    backgroundColor = Constant.bgColor
+    layer.cornerRadius = Constant.radius
+    layer.borderColor = Constant.borderColor
+    layer.borderWidth = Constant.borderWidth
   }
 }
 
