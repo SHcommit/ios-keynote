@@ -11,24 +11,37 @@ final class InspectorView: UIView {
   // MARK: - Constant
   struct Constant {
     enum BackgroundColorLabel {
-      static let textSize: CGFloat = 14
+      static let textSize: CGFloat = 16
       static let spacing: UISpacing = .init(leading:7, top: 7)
-      static let edgeInset: UIEdgeInsets = .init(top: 7, left: 7*3, bottom: 7, right: 7*3)
     }
     
-    enum BackgroundColorStateView {
-      static let textSize: CGFloat = 14
-      static let spacing: UISpacing = .init(leading:7, top: 7)
-      static let bgColor: UIColor = .systemYellow.withAlphaComponent(0.7)
+    enum BackgroundColorStateLabel {
+      static let textSize: CGFloat = 16
+      static let spacing: UISpacing = .init(leading:7, top: 7, trailing: 7)
+      static let bgColor: UIColor = .systemYellow
+      static let innerVertiSpacing: CGFloat = 7
+      static let radius: CGFloat = 7
     }
     
     enum AlphaLabel {
-      static let textSize: CGFloat = 14
+      static let textSize: CGFloat = 16
+      static let spacing: UISpacing = .init(leading:7, top: 7*2)
     }
     
     enum AlphaView {
-      static let spacing: UISpacing = .init(leading:7, top: 7*2, trailing: 7)
+      static let spacing: UISpacing = .init(leading:7, top: 7, trailing: 7)
     }
+  }
+  
+  enum setBGColorStateTypes {
+    case setText(String)
+    case setBgColor(UIColor)
+    case setBgColorAlpha(Double)
+  }
+  
+  var bgColorStateViewHeightWithVertiSpacing: CGFloat {
+    backgroundColorStateLabel.sizeToFit()
+    return backgroundColorStateLabel.bounds.height + Constant.BackgroundColorStateLabel.innerVertiSpacing * 2.0
   }
   
   // MARK: - UI Properties
@@ -37,15 +50,17 @@ final class InspectorView: UIView {
     $0.text = "배경색"
     $0.font = .systemFont(
       ofSize: Constant.BackgroundColorLabel.textSize,
-      weight: .semibold)
+      weight: .regular)
   }
   
-  private let backgroundColorStateView = UILabel().set {
+  private let backgroundColorStateLabel = UILabel().set {
     $0.translatesAutoresizingMaskIntoConstraints = false
     $0.text = "0x..."
-    $0.font = .systemFont(ofSize: Constant.BackgroundColorStateView.textSize)
-    $0.backgroundColor = Constant.BackgroundColorStateView.bgColor
+    $0.font = .systemFont(ofSize: Constant.BackgroundColorStateLabel.textSize)
+    $0.backgroundColor = Constant.BackgroundColorStateLabel.bgColor
     $0.textAlignment = .center
+    $0.layer.cornerRadius = Constant.BackgroundColorStateLabel.radius
+    $0.clipsToBounds = true
   }
   
   private let alphaLabel = UILabel().set {
@@ -53,7 +68,7 @@ final class InspectorView: UIView {
     $0.text = "투명도"
     $0.font = .systemFont(
       ofSize: Constant.AlphaLabel.textSize,
-      weight: .semibold)
+      weight: .regular)
   }
   
   private let alphaView = AlphaView()
@@ -64,7 +79,7 @@ final class InspectorView: UIView {
     configureUI()
     setupSubviewUI(
       with: backgroundColorLabel,
-      backgroundColorStateView,
+      backgroundColorStateLabel,
       alphaLabel,
       alphaView)
   }
@@ -80,24 +95,41 @@ final class InspectorView: UIView {
 
 // MARK: - Helper
 extension InspectorView {
-  func setBackgroundColorStateViewText(with text: String) {
-    DispatchQueue.main.async {
-      self.backgroundColorLabel.text = text
-    }
-  }
-  
-  func setBackgroundColorStateViewBGColor(with color: UIColor) {
-    DispatchQueue.main.async {
-      self.backgroundColorLabel.backgroundColor = color
+  func setBgColorStateView(with type: setBGColorStateTypes) {
+    switch type {
+    case .setText(let text):
+      setBackgroundColorStateViewText(with: text)
+    case .setBgColorAlpha(let alphaValue):
+      setBackgroundColorStateViewBgColorAlpha(with: alphaValue)
+    case .setBgColor(let color):
+      setBackgroundColorStateViewBgColor(with: color)
     }
   }
 }
 
 // MARK: - Private helper
-private extension InspectorView {
-  func configureUI() {
+extension InspectorView {
+  private func configureUI() {
     backgroundColor = .systemGray6
     translatesAutoresizingMaskIntoConstraints = false
+  }
+  
+  private func setBackgroundColorStateViewText(with text: String) {
+    DispatchQueue.main.async {
+      self.backgroundColorStateLabel.text = text
+    }
+  }
+  
+  private func setBackgroundColorStateViewBgColor(with color: UIColor) {
+    DispatchQueue.main.async {
+      self.backgroundColorStateLabel.backgroundColor = color
+    }
+  }
+  
+  private func setBackgroundColorStateViewBgColorAlpha(with alpha: Double) {
+    DispatchQueue.main.async {
+      self.backgroundColorStateLabel.backgroundColor?.withAlphaComponent(alpha)
+    }
   }
 }
 
@@ -105,7 +137,7 @@ private extension InspectorView {
 extension InspectorView: LayoutSupport {
   func setConstraints() {
     _=[backgroundColorLabelConstraints,
-       backgroundColorStateViewConstraints,
+       backgroundColorStateLabelConstraints,
        alphaLabelConstraints,
        alphaViewConstraitns
     ].map {
@@ -118,18 +150,47 @@ extension InspectorView: LayoutSupport {
 // MARK: - LayoutSupport helper
 private extension InspectorView {
   var backgroundColorLabelConstraints: [NSLayoutConstraint] {
-    []
+    [backgroundColorLabel.leadingAnchor.constraint(
+      equalTo: leadingAnchor,
+      constant: Constant.BackgroundColorLabel.spacing.leading),
+     backgroundColorLabel.topAnchor.constraint(
+      equalTo: topAnchor,
+      constant: Constant.BackgroundColorLabel.spacing.top)]
   }
   
-  var backgroundColorStateViewConstraints: [NSLayoutConstraint] {
-    []
+  var backgroundColorStateLabelConstraints: [NSLayoutConstraint] {
+    print(bgColorStateViewHeightWithVertiSpacing)
+    return [backgroundColorStateLabel.leadingAnchor.constraint(
+      equalTo: leadingAnchor,
+      constant: Constant.BackgroundColorStateLabel.spacing.leading),
+     backgroundColorStateLabel.topAnchor.constraint(
+      equalTo: backgroundColorLabel.bottomAnchor,
+      constant: Constant.BackgroundColorStateLabel.spacing.top),
+     backgroundColorStateLabel.trailingAnchor.constraint(
+      equalTo: trailingAnchor,
+      constant: -Constant.BackgroundColorStateLabel.spacing.trailing),
+     backgroundColorStateLabel.heightAnchor.constraint(
+      equalToConstant: bgColorStateViewHeightWithVertiSpacing)]
   }
   
   var alphaLabelConstraints: [NSLayoutConstraint] {
-    []
+    [alphaLabel.leadingAnchor.constraint(
+      equalTo: leadingAnchor,
+      constant: Constant.AlphaLabel.spacing.leading),
+     alphaLabel.topAnchor.constraint(
+      equalTo: backgroundColorStateLabel.bottomAnchor,
+      constant: Constant.AlphaLabel.spacing.top)]
   }
   
   var alphaViewConstraitns: [NSLayoutConstraint] {
-    []
+    [alphaView.leadingAnchor.constraint(
+      equalTo: leadingAnchor,
+      constant: Constant.AlphaView.spacing.leading),
+     alphaView.topAnchor.constraint(
+      equalTo: alphaLabel.bottomAnchor,
+      constant: Constant.AlphaView.spacing.top),
+     alphaView.trailingAnchor.constraint(
+      equalTo: trailingAnchor,
+      constant: -Constant.AlphaView.spacing.trailing)]
   }
 }

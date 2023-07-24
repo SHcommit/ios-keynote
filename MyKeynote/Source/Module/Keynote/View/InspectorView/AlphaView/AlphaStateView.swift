@@ -16,7 +16,7 @@ final class AlphaStateView: UIView {
     static let bgColor: UIColor = .white
     
     enum StateLabel {
-      static let textSize: CGFloat = 10
+      static let textSize: CGFloat = 13
       static let spacing: UISpacing = .init(trailing:7)
     }
   }
