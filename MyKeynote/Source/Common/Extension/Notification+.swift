@@ -8,6 +8,6 @@
 import Foundation
 
 extension Notification.Name {
-  static let stepperValueChanged = Notification
+  static let AlphaViewStepperValueChanged = Notification
     .Name("stepperValueChanged")
 }
