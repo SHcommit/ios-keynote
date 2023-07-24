@@ -47,7 +47,7 @@ final class AlphaStateView: UIView {
 
 // MARK: - Helper
 extension AlphaStateView {
-  func updateStateLabel(with text: String) {
+  func setStateLabel(with text: String) {
     DispatchQueue.main.async {
       self.stateLabel.text = text
     }

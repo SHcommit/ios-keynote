@@ -57,15 +57,15 @@ final class AlphaView: UIView {
 extension AlphaView {
   @objc func didChangedStepperValue(_ sender: UIStepper) {
     let changedValue = Int(sender.value)
-    updateStateView(with: "\(changedValue)")
+    setStateView(with: "\(changedValue)")
     delegate?.valueChanged(changedValue)
   }
 }
 
 // MARK: - Private helper
 private extension AlphaView {
-  func updateStateView(with text: String) {
-    stateView.updateStateLabel(with: text)
+  func setStateView(with text: String) {
+    stateView.setStateLabel(with: text)
   }
 }
 
