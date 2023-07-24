@@ -42,6 +42,7 @@ final class InspectorView: UIView {
   
   private let backgroundColorStateView = UILabel().set {
     $0.translatesAutoresizingMaskIntoConstraints = false
+    $0.text = "0x..."
     $0.font = .systemFont(ofSize: Constant.BackgroundColorStateView.textSize)
     $0.backgroundColor = Constant.BackgroundColorStateView.bgColor
     $0.textAlignment = .center
@@ -57,12 +58,15 @@ final class InspectorView: UIView {
   
   private let alphaView = AlphaView()
   
-  
   // MARK: - Lifecycle
   override init(frame: CGRect) {
     super.init(frame: frame)
-    backgroundColor = .systemGray6 
-    translatesAutoresizingMaskIntoConstraints = false
+    configureUI()
+    setupSubviewUI(
+      with: backgroundColorLabel,
+      backgroundColorStateView,
+      alphaLabel,
+      alphaView)
   }
   
   required init?(coder: NSCoder) {
@@ -71,5 +75,61 @@ final class InspectorView: UIView {
   
   convenience init() {
     self.init(frame: .zero)
+  }
+}
+
+// MARK: - Helper
+extension InspectorView {
+  func setBackgroundColorStateViewText(with text: String) {
+    DispatchQueue.main.async {
+      self.backgroundColorLabel.text = text
+    }
+  }
+  
+  func setBackgroundColorStateViewBGColor(with color: UIColor) {
+    DispatchQueue.main.async {
+      self.backgroundColorLabel.backgroundColor = color
+    }
+  }
+}
+
+// MARK: - Private helper
+private extension InspectorView {
+  func configureUI() {
+    backgroundColor = .systemGray6
+    translatesAutoresizingMaskIntoConstraints = false
+  }
+}
+
+// MARK: - LayoutSupport
+extension InspectorView: LayoutSupport {
+  func setConstraints() {
+    _=[backgroundColorLabelConstraints,
+       backgroundColorStateViewConstraints,
+       alphaLabelConstraints,
+       alphaViewConstraitns
+    ].map {
+      NSLayoutConstraint.activate($0)
+    }
+  }
+}
+
+
+// MARK: - LayoutSupport helper
+private extension InspectorView {
+  var backgroundColorLabelConstraints: [NSLayoutConstraint] {
+    []
+  }
+  
+  var backgroundColorStateViewConstraints: [NSLayoutConstraint] {
+    []
+  }
+  
+  var alphaLabelConstraints: [NSLayoutConstraint] {
+    []
+  }
+  
+  var alphaViewConstraitns: [NSLayoutConstraint] {
+    []
   }
 }
