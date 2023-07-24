@@ -16,6 +16,8 @@ final class AlphaView: UIView {
       static let spacing: UISpacing = .init(leading: 7)
       static let minValue: Double = Double(AppSetting.UIConstAlpha.minAlpha)
       static let maxValue: Double = Double(AppSetting.UIConstAlpha.maxAlpha)
+      static let notificatonCenterPostKey: some Hashable = String(
+        describing: AlphaView.Constant.Stepper.self)
     }
   }
   
@@ -33,9 +35,6 @@ final class AlphaView: UIView {
       action: #selector(didChangedStepperValue),
       for: .valueChanged)
   }
-  
-  // MARK: - Properties
-  weak var delegate: AlphaViewDelegate?
   
   // MARK: - Lifecycle
   private override init(frame: CGRect) {
@@ -58,7 +57,7 @@ extension AlphaView {
   @objc func didChangedStepperValue(_ sender: UIStepper) {
     let changedValue = Int(sender.value)
     setStateView(with: "\(changedValue)")
-    delegate?.valueChanged(changedValue)
+    notifyStepperValueChangedToObservers(with: changedValue)
   }
 }
 
@@ -66,6 +65,18 @@ extension AlphaView {
 private extension AlphaView {
   func setStateView(with text: String) {
     stateView.setStateLabel(with: text)
+  }
+  
+  func notifyStepperValueChangedToObservers(with alpha: Int) {
+    let key: some Hashable = Constant
+      .Stepper
+      .notificatonCenterPostKey
+    
+    let userInfo: [some Hashable: Int] = [key: alpha]
+    NotificationCenter.default.post(
+      name: .AlphaViewStepperValueChanged,
+      object: nil,
+      userInfo: userInfo)
   }
 }
 
