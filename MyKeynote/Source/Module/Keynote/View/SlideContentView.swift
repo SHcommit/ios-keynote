@@ -16,7 +16,7 @@ final class SlideContentView: UIView {
     super.init(frame: frame)
     backgroundColor = .systemGray2
     translatesAutoresizingMaskIntoConstraints = false
-    setupUI(with: slideView)
+    setupSubviewUI(with: slideView)
     let rectModel = RectModel(uniqueID: "", width: 250, rgba: .init(red: 0, green: 0, blue: 0, alpha: .init(alpha: 0)))
     let slideModel = SlideModel(rectModel: rectModel, state: .rect)
     slideView.configure(with: slideModel)

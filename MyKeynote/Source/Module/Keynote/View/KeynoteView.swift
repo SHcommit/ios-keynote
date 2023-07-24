@@ -35,9 +35,8 @@ final class KeynoteView: UIView {
   // MARK: - Lifecycle
   override init(frame: CGRect) {
     super.init(frame: frame)
-    setupUI(with: slideMenuView, inspectorView, slideContentView)
-    backgroundColor = .darkGray
-    
+    setupSubviewUI(with: slideMenuView, inspectorView, slideContentView)
+    backgroundColor = .darkGray 
   }
   
   convenience init() {

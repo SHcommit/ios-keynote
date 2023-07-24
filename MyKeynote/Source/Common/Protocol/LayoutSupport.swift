@@ -28,7 +28,7 @@ import UIKit
 ///   // MARK: - Lifecycle
 ///   override func viewDidLoad() {
 ///     super.viewDidLoad()
-///     setupUI(emptyView, aView, bView)
+///     setupSubviewUI(emptyView, aView, bView)
 ///   }
 /// }
 ///
@@ -49,7 +49,7 @@ protocol LayoutSupport {
 
 extension LayoutSupport where Self: UIView {
   // 함수 호출시 superView에 포함될 subviews 포함
-  func setupUI(with subviews: UIView...) {
+  func setupSubviewUI(with subviews: UIView...) {
     addSubviews(subviews)
     setConstraints()
   }
