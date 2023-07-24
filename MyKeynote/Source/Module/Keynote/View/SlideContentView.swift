@@ -31,9 +31,9 @@ final class SlideContentView: UIView {
   }
 }
 
+// MARK: - LayoutSupport
 extension SlideContentView: LayoutSupport {
   func setConstraints() {
-    addSubview(slideView)
     NSLayoutConstraint.activate([
       slideView.leadingAnchor.constraint(equalTo: leadingAnchor),
       slideView.trailingAnchor.constraint(equalTo: trailingAnchor),
