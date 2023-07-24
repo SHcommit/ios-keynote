@@ -13,7 +13,7 @@ final class KeynoteView: UIView {
     enum SlideMenuView {
       static let width = {
         let screenBounds = UIScreen.main.bounds
-        return (screenBounds.width - screenBounds.height) / 2.0
+        return (screenBounds.width - screenBounds.height) / 2.3
       }()
     }
     enum ContentView {
