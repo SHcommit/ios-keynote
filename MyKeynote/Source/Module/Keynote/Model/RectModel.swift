@@ -16,6 +16,13 @@ final class RectModel {
   
   private var rgba: RGBAModel
   
+  var alpha: Double {
+    if rgba.isValidAlphaRange(rgba.alphaValue) {
+      return Double(rgba.alphaValue)
+    }
+    return Double(rgba.alphaMaxValue)
+  }
+  
   // MARK: - Lifecycle
   init(uniqueID: String, width: Int, rgba: RGBAModel) {
     self.uniqueID = uniqueID
