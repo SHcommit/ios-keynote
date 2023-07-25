@@ -31,8 +31,8 @@ final class SlideDetailViewCell: UITableViewCell {
     reuseIdentifier: String?
   ) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
-    setupSubviewUI(with: inspectorView, slideContentView)
-    backgroundColor = .systemGray
+    setupSubviewUI(with: slideContentView, inspectorView)
+    backgroundColor = .systemGray 
   }
   
   required init?(coder: NSCoder) {
@@ -60,9 +60,8 @@ extension SlideDetailViewCell {
 // MARK: - LayoutSupport
 extension SlideDetailViewCell: LayoutSupport {
   func setConstraints() {
-    _=[inspectorViewConstraints,
-       slideContentViewConstraints
-    ].map {
+    _=[slideContentViewConstraints,
+       inspectorViewConstraints].map {
       NSLayoutConstraint.activate($0)
     }
   }
@@ -70,17 +69,6 @@ extension SlideDetailViewCell: LayoutSupport {
 
 // MARK: - LayoutSupport helper
 private extension SlideDetailViewCell {
-  private var inspectorViewConstraints: [NSLayoutConstraint] {
-    [inspectorView.trailingAnchor.constraint(
-      equalTo: contentView.trailingAnchor),
-     inspectorView.topAnchor.constraint(
-      equalTo: contentView.topAnchor),
-     inspectorView.bottomAnchor.constraint(
-      equalTo: contentView.bottomAnchor),
-     inspectorView.widthAnchor.constraint(
-      equalToConstant: Constant.InspectorView.width)]
-  }
-  
   private var slideContentViewConstraints: [NSLayoutConstraint] {
     [slideContentView.leadingAnchor.constraint(
       equalTo: contentView.leadingAnchor),
@@ -88,5 +76,17 @@ private extension SlideDetailViewCell {
       equalTo: contentView.topAnchor),
      slideContentView.bottomAnchor.constraint(
       equalTo: contentView.bottomAnchor)]
+  }
+  
+  private var inspectorViewConstraints: [NSLayoutConstraint] {
+    [inspectorView.leadingAnchor.constraint(
+      equalTo: slideContentView.trailingAnchor),
+     inspectorView.trailingAnchor.constraint(
+      equalTo: contentView.trailingAnchor),
+     inspectorView.topAnchor.constraint(
+      equalTo: contentView.topAnchor),
+     inspectorView.bottomAnchor.constraint(
+      equalTo: contentView.bottomAnchor),
+     inspectorView.widthAnchor.constraint(equalToConstant: Constant.InspectorView.width)]
   }
 }
