@@ -39,12 +39,49 @@ extension SlideView{
     case .rect:
       guard let rectModel = data.rectModel else { return }
       guard let rectView = rectView else { return }
-      addSubview(rectView)
-      NSLayoutConstraint.activate([
-        rectView.centerXAnchor.constraint(equalTo: centerXAnchor),
-        rectView.centerYAnchor.constraint(equalTo: centerYAnchor),
-        rectView.widthAnchor.constraint(equalToConstant: CGFloat(rectModel.width)),
-        rectView.heightAnchor.constraint(equalToConstant: CGFloat(rectModel.width))])
+      if !subviews.contains(where: {$0 === rectView} ) {
+        addSubview(rectView)
+        NSLayoutConstraint.activate(
+          rectViewContraints(with: rectModel))
+      }
+      
     }
+  }
+  
+  func setRectViewAlpah(with: Double) {
+    DispatchQueue.main.async {
+      let bgColor = self.rectView?.backgroundColor
+      self.rectView?.backgroundColor = bgColor?.withAlphaComponent(with)
+    }
+  }
+  
+  func setRectViewColor(with: UIColor) {
+    DispatchQueue.main.async {
+      self.rectView?.backgroundColor = with
+    }
+  }
+}
+
+// MARK: - Private helper
+private extension SlideView {
+  func setRectViewBgColor(with model: RectModel) {
+    DispatchQueue.main.async {
+      let bgColor = self.rectView?.backgroundColor?.withAlphaComponent(model.alpha)
+      self.rectView?.backgroundColor = bgColor
+    }
+  }
+  
+  func rectViewContraints(with model: RectModel) -> [NSLayoutConstraint]
+  {
+    guard let rectView = rectView else { return [] }
+    return [
+      rectView.centerXAnchor.constraint(
+        equalTo: centerXAnchor),
+      rectView.centerYAnchor.constraint(
+        equalTo: centerYAnchor),
+      rectView.widthAnchor.constraint(
+        equalToConstant: CGFloat(model.width)),
+      rectView.heightAnchor.constraint(
+        equalToConstant: CGFloat(model.width))]
   }
 }
