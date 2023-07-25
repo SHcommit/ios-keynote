@@ -28,5 +28,8 @@ private extension SlideMenuView {
   func configureUI() {
     backgroundColor = .systemGray6
     translatesAutoresizingMaskIntoConstraints = false
+    register(
+      SlideMenuViewCell.self,
+      forCellReuseIdentifier: SlideMenuViewCell.id)
   }
 }
