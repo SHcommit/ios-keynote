@@ -36,15 +36,15 @@ final class SlideView: UIView {
 extension SlideView{
   func configure(with data: SlideModel) {
     switch data.state {
-    case .rect:
-      guard let rectModel = data.rectModel else { return }
+    case .rect(let rectModel):
       guard let rectView = rectView else { return }
       if !subviews.contains(where: {$0 === rectView} ) {
         addSubview(rectView)
         NSLayoutConstraint.activate(
           rectViewContraints(with: rectModel))
       }
-      
+    default:
+      break
     }
   }
   

@@ -6,6 +6,7 @@
 //
 
 final class RectModel {
+  typealias RGB = RGBAModel.RGB
   // MARK: - Constant
   typealias AlphaConstant = AppSetting.UIConstAlpha
   
@@ -21,6 +22,10 @@ final class RectModel {
       return Double(rgba.alphaValue)
     }
     return Double(rgba.alphaMaxValue)
+  }
+  
+  var rgb: RGB {
+    (rgba.red, rgba.green, rgba.blue)
   }
   
   // MARK: - Lifecycle
@@ -53,6 +58,14 @@ extension RectModel {
     let curAlpha = rgba.alphaValue
     
     return maxAlpha != curAlpha
+  }
+  
+  func setAlpha(with value: UInt8) {
+    rgba.updateAlpha(with: value)
+  }
+  
+  func setRGB(with rgb: RGB) {
+    rgba.updateColor(with: rgb)
   }
 }
 

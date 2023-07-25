@@ -9,17 +9,25 @@ import Foundation
 
 struct SlideModel {
   enum State {
-    case rect
+    case rect (RectModel)
+    case image(AlphaView)
   }
   
   // MARK: - Properties
-  var rectModel: RectModel?
-  
   private(set) var state: State
   
+  
   // MARK: - Lifecycle
-  init(rectModel: RectModel? = nil, state: State) {
-    self.rectModel = rectModel
+  init(state: State) {
     self.state = state
+  }
+  
+  var getinstance: Any? {
+    switch state {
+    case .rect(let rectModel):
+      return rectModel
+    default:
+      return nil
+    }
   }
 }

@@ -8,6 +8,12 @@
 import Foundation
 import Combine
 
+protocol SlideModelAccessable {
+  func add(_ slideModel: SlideModel)
+  
+  func update(_ slideModel: SlideModel, indexPath: IndexPath)
+}
+
 final class SlideManager {
   // MARK: - Properties
   private let rectModelFactory: RectModelAbstractFactory
@@ -41,25 +47,18 @@ extension SlideManager {
     let userInfoKey = AlphaView.Constant.Stepper.notificatonCenterPostKey
     guard
       let userInfo = notification.userInfo,
-      let alphaValue = userInfo[userInfoKey] as? Int
+      let (alpha, indexPath) = userInfo[userInfoKey] as? (alpha: Int, indexPath: IndexPath),
+      let rectModel = slideModels[indexPath.row].getinstance as? RectModel
     else {
       return
     }
-    alphaValueSubject.send(alphaValue)
+    rectModel.setAlpha(with: UInt8(alpha))
   }
 }
 
 
-// MARK: - Private helper
-private extension SlideManager {
-  func bind() {
-    NotificationCenter.default.addObserver(
-      self,
-      selector: #selector(setBgStateView),
-      name: .AlphaViewStepperValueChanged,
-      object: nil)
-  }
-  
+// MARK: - Helper
+extension SlideManager {
   func makeRectModel() -> RectModel {
     let uniqueId = uniqueIdStorage.create(
       from: rectModelFactory)
@@ -94,6 +93,14 @@ extension SlideManager: SlideManagerType {
 
 // MARK: - Private helper
 private extension SlideManager {
+  func bind() {
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(setBgStateView),
+      name: .AlphaViewStepperValueChanged,
+      object: nil)
+  }
+  
   func changedStepperValueChains() -> Output {
     return alphaValueSubject
       .subscribe(on: RunLoop.main)
@@ -118,5 +125,15 @@ extension SlideManager: KeynoteSlideMenuDataSource  {
   
   func cellItem(at index: Int) -> SlideModel {
     return slideModels[index]
+  }
+}
+
+extension SlideManager: SlideModelAccessable {
+  func add(_ slideModel: SlideModel) {
+    slideModels.append(slideModel)
+  }
+  
+  func update(_ slideModel: SlideModel, indexPath: IndexPath) {
+    slideModels[indexPath.row] = slideModel
   }
 }

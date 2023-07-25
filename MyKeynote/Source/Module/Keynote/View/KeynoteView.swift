@@ -28,14 +28,44 @@ final class KeynoteView: UIView {
   // MARK: - Properties
   private let slideMenuView = SlideMenuView()
   
-  private let inspectorView = InspectorView()
+  private lazy var slideDetailView = SlideDetailView()
   
-  private let slideContentView = SlideContentView()
+  var slideMenuViewDataSource: UITableViewDataSource? {
+    get {
+      slideMenuView.dataSource
+    } set {
+      slideMenuView.dataSource = newValue
+    }
+  }
+  
+  var slideMenuViewDelegate: UITableViewDelegate? {
+    get {
+      slideMenuView.delegate
+    } set {
+      slideMenuView.delegate = newValue
+    }
+  }
+  
+  var slideDatailViewDataSource: UITableViewDataSource? {
+    get {
+      slideDetailView.dataSource
+    } set {
+      slideDetailView.dataSource = newValue
+    }
+  }
+  
+  var slideDataViewDelegate: UITableViewDelegate? {
+    get {
+      slideDetailView.delegate
+    } set {
+      slideDetailView.delegate = newValue
+    }
+  }
   
   // MARK: - Lifecycle
   override init(frame: CGRect) {
     super.init(frame: frame)
-    setupSubviewUI(with: slideMenuView, inspectorView, slideContentView)
+    setupSubviewUI(with: slideMenuView, slideDetailView)
     backgroundColor = .darkGray 
   }
   
@@ -48,47 +78,35 @@ final class KeynoteView: UIView {
   }
 }
 
-// MARK: - Helper
-extension KeynoteView {
-  func setRectViewAlpha(with alpha: Double) {
-    slideContentView.setRectColorAlpha(with: alpha)
-  }
-  
-  func setRectViewColor(with color: UIColor) {
-    slideContentView.setRectColor(with: color)
-  }
-}
-
 // MARK: - LayoutSupport
 extension KeynoteView: LayoutSupport {
   func setConstraints() {
     _=[slideMenuViewConstraints,
-       inspectorViewConstraints,
-       slideContentViewConstraints]
+       slideDetailViewConstraints]
       .map {
         NSLayoutConstraint.activate($0)
-        print(Constant.SlideMenuView.width)
       }
   }
   
   private var slideMenuViewConstraints: [NSLayoutConstraint] {
-    [slideMenuView.leadingAnchor.constraint(equalTo: leadingAnchor),
-     slideMenuView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-     slideMenuView.bottomAnchor.constraint(equalTo: bottomAnchor),
-     slideMenuView.widthAnchor.constraint(equalToConstant: Constant.SlideMenuView.width)]
+    [slideMenuView.leadingAnchor.constraint(
+      equalTo: leadingAnchor),
+     slideMenuView.topAnchor.constraint(
+      equalTo: safeAreaLayoutGuide.topAnchor),
+     slideMenuView.bottomAnchor.constraint(
+      equalTo: bottomAnchor),
+     slideMenuView.widthAnchor.constraint(
+      equalToConstant: Constant.SlideMenuView.width)]
   }
   
-  private var inspectorViewConstraints: [NSLayoutConstraint] {
-    [inspectorView.trailingAnchor.constraint(equalTo: trailingAnchor),
-     inspectorView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-     inspectorView.bottomAnchor.constraint(equalTo: bottomAnchor),
-     inspectorView.widthAnchor.constraint(equalToConstant: Constant.InspectorView.width)]
-  }
-  
-  private var slideContentViewConstraints: [NSLayoutConstraint] {
-    [slideContentView.leadingAnchor.constraint(equalTo: slideMenuView.trailingAnchor),
-     slideContentView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-     slideContentView.bottomAnchor.constraint(equalTo: bottomAnchor),
-     slideContentView.trailingAnchor.constraint(equalTo: inspectorView.leadingAnchor)]
+  private var slideDetailViewConstraints: [NSLayoutConstraint] {
+    [slideDetailView.leadingAnchor.constraint(
+      equalTo: slideMenuView.trailingAnchor),
+     slideDetailView.topAnchor.constraint(
+      equalTo: safeAreaLayoutGuide.topAnchor),
+     slideDetailView.trailingAnchor.constraint(
+      equalTo: trailingAnchor),
+     slideDetailView.bottomAnchor.constraint(
+      equalTo: bottomAnchor)]
   }
 }

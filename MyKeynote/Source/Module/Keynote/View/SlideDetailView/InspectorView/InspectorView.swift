@@ -71,7 +71,17 @@ final class InspectorView: UIView {
       weight: .regular)
   }
   
-  private let alphaView = AlphaView()
+  private lazy var alphaView = AlphaView(indexPath: indexPath)
+  
+  var indexPath: IndexPath {
+    guard
+      let cell = superview as? UITableViewCell,
+      let tableView = superview?.superview as? UITableView
+    else {
+      return .init(row: 0, section: 0)
+    }
+    return tableView.indexPath(for: cell) ?? .init(row: 0, section: 0)
+  }
   
   // MARK: - Lifecycle
   override init(frame: CGRect) {
@@ -111,7 +121,8 @@ extension InspectorView {
     else {
       return
     }
-    setBgColorStateView(with: .setBgColorAlpha(Double(message)/10.0))
+    setBgColorStateView(
+      with: .setBgColorAlpha(Double(message)/10.0))
   }
 }
 

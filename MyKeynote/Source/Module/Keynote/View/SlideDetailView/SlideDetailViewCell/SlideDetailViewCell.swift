@@ -32,6 +32,7 @@ final class SlideDetailViewCell: UITableViewCell {
   ) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
     setupSubviewUI(with: inspectorView, slideContentView)
+    backgroundColor = .systemGray
   }
   
   required init?(coder: NSCoder) {
@@ -41,11 +42,17 @@ final class SlideDetailViewCell: UITableViewCell {
 
 // MARK: - Helper
 extension SlideDetailViewCell {
-  func setRectViewAlpha(with alpha: Double) {
+  func configure(with alpha: Double, color: UIColor) {
+    setRectViewColor(with: color)
+    setRectViewAlpha(with: alpha)
+  }
+  
+  // MARK: - Private helper
+  private func setRectViewAlpha(with alpha: Double) {
     slideContentView.setRectColorAlpha(with: alpha)
   }
   
-  func setRectViewColor(with color: UIColor) {
+  private func setRectViewColor(with color: UIColor) {
     slideContentView.setRectColor(with: color)
   }
 }

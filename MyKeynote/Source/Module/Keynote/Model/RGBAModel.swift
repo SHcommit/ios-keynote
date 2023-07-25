@@ -5,13 +5,14 @@
 //  Created by 양승현 on 2023/07/19.
 //
 
-struct RGBAModel {
+class RGBAModel {
+  typealias RGB = (R: UInt8, G: UInt8, B: UInt8)
   // MARK: - Properties
-  @GrayscaleRange var red: UInt8
+  @GrayscaleRange private(set) var red: UInt8
   
-  @GrayscaleRange var green: UInt8
+  @GrayscaleRange private(set) var green: UInt8
   
-  @GrayscaleRange var blue: UInt8
+  @GrayscaleRange private(set) var blue: UInt8
   
   private var alpha: AlphaModel
   
@@ -39,20 +40,30 @@ struct RGBAModel {
 
 // MARK: - Helper
 extension RGBAModel {
-  mutating func isValidAlphaRange(_ target: UInt8) -> Bool {
+  func isValidAlphaRange(_ target: UInt8) -> Bool {
     return alpha.isValidRange(target)
   }
   
-  mutating func plusAlpha() {
+  func updateAlpha(with alphaValue: UInt8) {
+    alpha.setAlpha(with: alphaValue)
+  }
+  
+  func plusAlpha() {
     alpha.plusAlpha()
   }
   
-  mutating func minusAlpha() {
+  func minusAlpha() {
     alpha.minusAlpha()
   }
   
   var alphaValue: UInt8 {
     alpha.alpha
+  }
+  
+  func updateColor(with rgb: RGB) {
+    red = rgb.R
+    green = rgb.G
+    blue = rgb.B
   }
 }
 

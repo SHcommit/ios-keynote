@@ -5,7 +5,7 @@
 //  Created by 양승현 on 2023/07/19.
 //
 
-struct AlphaModel {
+final class AlphaModel {
   // MARK: - Constant
   private(set) var minValue: UInt8 = AppSetting.UIConstAlpha.minAlpha
   private(set) var maxValue: UInt8 = AppSetting.UIConstAlpha.maxAlpha
@@ -22,15 +22,21 @@ struct AlphaModel {
 
 // MARK: - Helper
 extension AlphaModel {
-  mutating func isValidRange(_ target: UInt8) -> Bool {
+  func isValidRange(_ target: UInt8) -> Bool {
     return availableRange.contains(target)
   }
   
-  mutating func plusAlpha() {
+  func setAlpha(with value: UInt8) {
+    if isValidRange(value) {
+      alpha = value
+    }
+  }
+  
+  func plusAlpha() {
     if isValidRange(alpha+1) { alpha += 1 }
   }
   
-  mutating func minusAlpha() {
+  func minusAlpha() {
     if isValidRange(alpha-1) { alpha -= 1 }
   }
 }

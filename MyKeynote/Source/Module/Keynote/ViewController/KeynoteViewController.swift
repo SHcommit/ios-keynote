@@ -36,6 +36,7 @@ class KeynoteViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     missionWeek3_1()
+    keynoteView.slideDatailViewDataSource = self
     bind()
   }
   
@@ -53,12 +54,47 @@ class KeynoteViewController: UIViewController {
     case .none:
       break
     case .updateRectAlpha(let alpha):
-      keynoteView.setRectViewAlpha(with: alpha)
+      // keynoteView.setRectViewAlpha(with: alpha)
+      break
     case .updateRectColor(let rgb):
       let color = UIColor(
         red: rgb.R, green: rgb.G, blue: rgb.B, alpha: 1)
-      keynoteView.setRectViewColor(with: color)
+      // keynoteView.setRectViewColor(with: color)
+      break
     }
+  }
+}
+
+extension KeynoteViewController: UITableViewDataSource {
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return slideManager.numberOfItems
+  }
+  
+  func tableView(
+    _ tableView: UITableView,
+    cellForRowAt indexPath: IndexPath
+  ) -> UITableViewCell {
+    if tableView is SlideDetailView {
+      guard
+        let cell = tableView.dequeueReusableCell(
+          withIdentifier: SlideDetailViewCell.id,
+          for: indexPath) as? SlideDetailViewCell
+      else { return .init(style: .default, reuseIdentifier: SlideMenuViewCell.id)}
+      let item = slideManager.cellItem(at: indexPath.row)
+      if let rectModel = item.getinstance as? RectModel {
+        let rgb = rectModel.rgb
+        cell.configure(
+          with: rectModel.alpha,
+          color: UIColor(
+            red: CGFloat(rgb.R),
+            green: CGFloat(rgb.G),
+            blue: CGFloat(rgb.B),
+            alpha: rectModel.alpha))
+      }
+      
+      return cell
+    }
+    return .init(frame: .zero)
   }
 }
 

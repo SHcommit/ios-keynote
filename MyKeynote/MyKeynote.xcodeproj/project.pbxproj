@@ -39,6 +39,8 @@
 		15B3830E2A6E163200F747D8 /* AlphaStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B3830D2A6E163200F747D8 /* AlphaStateView.swift */; };
 		15B383142A6E34A500F747D8 /* Notification+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B383132A6E34A500F747D8 /* Notification+.swift */; };
 		15B3831A2A6F869900F747D8 /* SlideMenuViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B383192A6F869900F747D8 /* SlideMenuViewCell.swift */; };
+		15B3831D2A6F895F00F747D8 /* SlideDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B3831C2A6F895F00F747D8 /* SlideDetailView.swift */; };
+		15B383202A6F8AFD00F747D8 /* SlideDetailViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B3831F2A6F8AFD00F747D8 /* SlideDetailViewCell.swift */; };
 		15BF0B142A68C45800D6B69B /* RectModelAbstractFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BF0B132A68C45800D6B69B /* RectModelAbstractFactory.swift */; };
 		15BF0B162A68C5D600D6B69B /* RectModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BF0B152A68C5D600D6B69B /* RectModelFactory.swift */; };
 		15BF0B192A69970300D6B69B /* SlideManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BF0B182A69970300D6B69B /* SlideManager.swift */; };
@@ -106,6 +108,8 @@
 		15B3830D2A6E163200F747D8 /* AlphaStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlphaStateView.swift; sourceTree = "<group>"; };
 		15B383132A6E34A500F747D8 /* Notification+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+.swift"; sourceTree = "<group>"; };
 		15B383192A6F869900F747D8 /* SlideMenuViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideMenuViewCell.swift; sourceTree = "<group>"; };
+		15B3831C2A6F895F00F747D8 /* SlideDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideDetailView.swift; sourceTree = "<group>"; };
+		15B3831F2A6F8AFD00F747D8 /* SlideDetailViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideDetailViewCell.swift; sourceTree = "<group>"; };
 		15BF0B132A68C45800D6B69B /* RectModelAbstractFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectModelAbstractFactory.swift; sourceTree = "<group>"; };
 		15BF0B152A68C5D600D6B69B /* RectModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectModelFactory.swift; sourceTree = "<group>"; };
 		15BF0B182A69970300D6B69B /* SlideManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideManager.swift; sourceTree = "<group>"; };
@@ -357,11 +361,21 @@
 		15B3831B2A6F88BC00F747D8 /* SlideDetailView */ = {
 			isa = PBXGroup;
 			children = (
+				15B3831E2A6F8AEA00F747D8 /* SlideDetailViewCell */,
 				15B383152A6E3EA600F747D8 /* InspectorView */,
-				15BF0B2C2A69C0F800D6B69B /* SlideView.swift */,
-				15BF0B2A2A69BBE900D6B69B /* SlideContentView.swift */,
+				15B3831C2A6F895F00F747D8 /* SlideDetailView.swift */,
 			);
 			path = SlideDetailView;
+			sourceTree = "<group>";
+		};
+		15B3831E2A6F8AEA00F747D8 /* SlideDetailViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				15BF0B2A2A69BBE900D6B69B /* SlideContentView.swift */,
+				15BF0B2C2A69C0F800D6B69B /* SlideView.swift */,
+				15B3831F2A6F8AFD00F747D8 /* SlideDetailViewCell.swift */,
+			);
+			path = SlideDetailViewCell;
 			sourceTree = "<group>";
 		};
 		15BF0B102A68737A00D6B69B /* Factory */ = {
@@ -531,12 +545,14 @@
 				1535B5FA2A68515400AE218B /* AppSetting.swift in Sources */,
 				153D6A242A67DD8600093A37 /* RGBRandomGenerator.swift in Sources */,
 				150411382A65C46B0050668C /* KeynoteViewController.swift in Sources */,
+				15B3831D2A6F895F00F747D8 /* SlideDetailView.swift in Sources */,
 				1504116D2A65C77A0050668C /* LayoutSupport.swift in Sources */,
 				150411782A65CF7F0050668C /* UIView+.swift in Sources */,
 				15B3830E2A6E163200F747D8 /* AlphaStateView.swift in Sources */,
 				15BF0B162A68C5D600D6B69B /* RectModelFactory.swift in Sources */,
 				153D6A282A67DDCD00093A37 /* UniqueIdRandomGenerator.swift in Sources */,
 				15BF0B202A69ABFE00D6B69B /* SlideManager+InputOutput.swift in Sources */,
+				15B383202A6F8AFD00F747D8 /* SlideDetailViewCell.swift in Sources */,
 				153D6A2C2A682C3800093A37 /* RGBAModel.swift in Sources */,
 				153D6A202A67DD3A00093A37 /* AlphaRandomGenerator.swift in Sources */,
 				150411742A65CC490050668C /* KeynoteView.swift in Sources */,

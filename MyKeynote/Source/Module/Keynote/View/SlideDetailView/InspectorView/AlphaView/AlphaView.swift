@@ -36,6 +36,8 @@ final class AlphaView: UIView {
       for: .valueChanged)
   }
   
+  private var indexPath: IndexPath!
+  
   // MARK: - Lifecycle
   private override init(frame: CGRect) {
     super.init(frame: frame)
@@ -43,8 +45,13 @@ final class AlphaView: UIView {
     setupSubviewUI(with: stateView, stepper)
   }
   
-  convenience init() {
-    self.init(frame: .zero)
+  init(frame: CGRect, indexPath: IndexPath) {
+    self.indexPath = indexPath
+    super.init(frame: frame)
+  }
+  
+  convenience init(indexPath: IndexPath) {
+    self.init(frame: .zero, indexPath: indexPath)
   }
   
   required init?(coder: NSCoder) {
@@ -71,7 +78,9 @@ private extension AlphaView {
     let key: some Hashable = Constant
       .Stepper
       .notificatonCenterPostKey
-    let userInfo: [some Hashable: Int] = [key: alpha]
+
+    let userInfo: [some Hashable: (alpha: Int, indexPath: IndexPath)] = [key: (alpha, indexPath)]
+    
     NotificationCenter.default.post(
       name: .AlphaViewStepperValueChanged,
       object: nil,
