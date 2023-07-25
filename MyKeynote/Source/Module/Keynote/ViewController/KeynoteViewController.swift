@@ -52,10 +52,12 @@ class KeynoteViewController: UIViewController {
     switch state {
     case .none:
       break
-    case .updateRectColor:
-      break
-    case .updateRectAlpha(let isMinusAlphaMutableState, let isPlusAlphaMutableState):
-      break
+    case .updateRectAlpha(let alpha):
+      keynoteView.setRectViewAlpha(with: alpha)
+    case .updateRectColor(let rgb):
+      let color = UIColor(
+        red: rgb.R, green: rgb.G, blue: rgb.B, alpha: 1)
+      keynoteView.setRectViewColor(with: color)
     }
   }
 }
