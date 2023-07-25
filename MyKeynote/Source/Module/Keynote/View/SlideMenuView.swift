@@ -7,12 +7,11 @@
 
 import UIKit
 
-final class SlideMenuView: UIView {
+final class SlideMenuView: UITableView {
   // MARK: - Lifecycle
-  override init(frame: CGRect) {
-    super.init(frame: frame)
-    backgroundColor = .systemGray6
-    translatesAutoresizingMaskIntoConstraints = false
+  private override init(frame: CGRect, style: UITableView.Style) {
+    super.init(frame: frame, style: style)
+    configureUI()
   }
   
   required init?(coder: NSCoder) {
@@ -20,6 +19,14 @@ final class SlideMenuView: UIView {
   }
   
   convenience init() {
-    self.init(frame: .zero)
+    self.init(frame: .zero, style: .plain)
+  }
+}
+
+// MARK: - Private helper
+private extension SlideMenuView {
+  func configureUI() {
+    backgroundColor = .systemGray6
+    translatesAutoresizingMaskIntoConstraints = false
   }
 }
