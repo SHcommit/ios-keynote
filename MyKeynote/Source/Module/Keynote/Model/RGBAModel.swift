@@ -6,11 +6,24 @@
 //
 
 struct RGBAModel {
+  // MARK: - Properties
   @GrayscaleRange var red: UInt8
+  
   @GrayscaleRange var green: UInt8
+  
   @GrayscaleRange var blue: UInt8
+  
   private var alpha: AlphaModel
   
+  var alphaMaxValue: UInt8 {
+    alpha.maxValue
+  }
+  
+  var alphaMinValue: UInt8 {
+    alpha.minValue
+  }
+  
+  // MARK: - Lifecycle
   init(
     red: UInt8,
     green: UInt8,
