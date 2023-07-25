@@ -59,3 +59,24 @@ extension LayoutSupport where Self: UIView {
     self.addSubviews(views)
   }
 }
+extension LayoutSupport where Self: UICollectionViewCell {
+  // 함수 호출시 superView에 포함될 subviews 포함
+  func setupSubviewUIa(with subviews: UIView...) {
+    addSubviewsInContentView(subviews)
+    setConstraints()
+  }
+  func addSubviewsInContentView(_ views: [UIView]) {
+    contentView.addSubviews(views)
+  }
+}
+
+extension LayoutSupport where Self: UITableViewCell {
+  func setupSubviewUIb(with subviews: UIView...) {
+    addSubviewsInContentView(subviews)
+    setConstraints()
+  }
+  
+  func addSubviewsInContentView(_ views: [UIView]) {
+    contentView.addSubviews(views)
+  }
+}
