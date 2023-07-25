@@ -7,8 +7,8 @@
 
 struct AlphaModel {
   // MARK: - Constant
-  private let minValue: UInt8 = AppSetting.UIConstAlpha.minAlpha
-  private let maxValue: UInt8 = AppSetting.UIConstAlpha.maxAlpha
+  private(set) var minValue: UInt8 = AppSetting.UIConstAlpha.minAlpha
+  private(set) var maxValue: UInt8 = AppSetting.UIConstAlpha.maxAlpha
   private lazy var availableRange: ClosedRange = minValue...maxValue
   
   // MARK: - Properties
