@@ -5,6 +5,7 @@
 //  Created by 양승현 on 2023/07/21.
 //
 
+import Foundation
 import Combine
 
 extension SlideManager {
@@ -17,8 +18,9 @@ extension SlideManager {
   }
   
   enum State {
-    case updateRectAlpha(isMinusAlphaMutableState: Bool, isPlusAlphaMutableState: Bool)
-    case updateRectColor
+    typealias RGB = (R: CGFloat, G: CGFloat, B: CGFloat)
+    case updateRectAlpha(Double)
+    case updateRectColor(RGB)
     case none
   }
   
