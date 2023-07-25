@@ -10,8 +10,6 @@ import UIKit
 final class AlphaView: UIView {
   // MARK: - Constant
   struct Constant {
-    enum StateView {}
-    
     enum Stepper {
       static let spacing: UISpacing = .init(leading: 7)
       static let minValue: Double = Double(AppSetting.UIConstAlpha.minAlpha)
@@ -36,6 +34,7 @@ final class AlphaView: UIView {
       for: .valueChanged)
   }
   
+  // MARK: - Properties
   private var indexPath: IndexPath!
   
   // MARK: - Lifecycle
@@ -48,6 +47,8 @@ final class AlphaView: UIView {
   init(frame: CGRect, indexPath: IndexPath) {
     self.indexPath = indexPath
     super.init(frame: frame)
+    translatesAutoresizingMaskIntoConstraints = false
+    setupSubviewUI(with: stateView, stepper)
   }
   
   convenience init(indexPath: IndexPath) {
