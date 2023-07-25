@@ -48,6 +48,17 @@ final class KeynoteView: UIView {
   }
 }
 
+// MARK: - Helper
+extension KeynoteView {
+  func setRectViewAlpha(with alpha: Double) {
+    slideContentView.setRectColorAlpha(with: alpha)
+  }
+  
+  func setRectViewColor(with color: UIColor) {
+    slideContentView.setRectColor(with: color)
+  }
+}
+
 // MARK: - LayoutSupport
 extension KeynoteView: LayoutSupport {
   func setConstraints() {
