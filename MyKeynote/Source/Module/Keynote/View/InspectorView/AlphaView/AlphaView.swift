@@ -71,7 +71,6 @@ private extension AlphaView {
     let key: some Hashable = Constant
       .Stepper
       .notificatonCenterPostKey
-    
     let userInfo: [some Hashable: Int] = [key: alpha]
     NotificationCenter.default.post(
       name: .AlphaViewStepperValueChanged,
