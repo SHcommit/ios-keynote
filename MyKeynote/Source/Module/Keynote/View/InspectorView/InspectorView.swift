@@ -82,6 +82,7 @@ final class InspectorView: UIView {
       backgroundColorStateLabel,
       alphaLabel,
       alphaView)
+    bind()
   }
   
   required init?(coder: NSCoder) {
@@ -90,6 +91,27 @@ final class InspectorView: UIView {
   
   convenience init() {
     self.init(frame: .zero)
+  }
+  
+  deinit {
+    NotificationCenter.default.removeObserver(
+        self,
+        name: .AlphaViewStepperValueChanged,
+        object: nil)
+  }
+}
+
+// MARK: - @Objc Helper
+extension InspectorView {
+  @objc func setBgStateView(_ notification: Notification) {
+    let userInfoKey = AlphaView.Constant.Stepper.notificatonCenterPostKey
+    guard
+      let userInfo = notification.userInfo,
+      let message = userInfo[userInfoKey] as? Int
+    else {
+      return
+    }
+    setBgColorStateView(with: .setBgColorAlpha(Double(message)/10.0))
   }
 }
 
@@ -128,8 +150,17 @@ extension InspectorView {
   
   private func setBackgroundColorStateViewBgColorAlpha(with alpha: Double) {
     DispatchQueue.main.async {
-      self.backgroundColorStateLabel.backgroundColor?.withAlphaComponent(alpha)
+      let bgColor = self.backgroundColorStateLabel.backgroundColor
+      self.backgroundColorStateLabel.backgroundColor = bgColor?.withAlphaComponent(alpha)
     }
+  }
+  
+  func bind() {
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(setBgStateView),
+      name: .AlphaViewStepperValueChanged,
+      object: nil)
   }
 }
 
