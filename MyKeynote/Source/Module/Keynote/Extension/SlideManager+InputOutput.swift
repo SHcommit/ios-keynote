@@ -19,8 +19,6 @@ extension SlideManager {
   
   enum State {
     typealias RGB = (R: CGFloat, G: CGFloat, B: CGFloat)
-    case updateRectAlpha(Double)
-    case updateRectColor(RGB)
     case none
   }
   

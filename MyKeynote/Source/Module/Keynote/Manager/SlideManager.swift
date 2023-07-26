@@ -85,7 +85,6 @@ extension SlideManager: SlideManagerType {
   func transform(input: Input) -> Output {
     return Publishers
       .MergeMany([
-        changedStepperValueChains(),
         appearChains(with: input)])
       .eraseToAnyPublisher()
   }
@@ -99,15 +98,6 @@ private extension SlideManager {
       selector: #selector(setBgStateView),
       name: .AlphaViewStepperValueChanged,
       object: nil)
-  }
-  
-  func changedStepperValueChains() -> Output {
-    return alphaValueSubject
-      .subscribe(on: RunLoop.main)
-      .map { alpha -> State in
-        let alphaMaxValue = Double(AppSetting.UIConstAlpha.maxAlpha)
-        return .updateRectAlpha(Double(alpha)/alphaMaxValue)
-      }.eraseToAnyPublisher()
   }
   
   func appearChains(with input: Input) -> Output {
