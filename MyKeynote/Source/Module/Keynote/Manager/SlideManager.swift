@@ -118,6 +118,21 @@ extension SlideManager: KeynoteSlideMenuDataSource  {
   }
 }
 
+extension SlideManager: KeynoteViewAdapterDataSource {
+  func slideDetailViewCellItem(at index: Int) -> SlideModel {
+    return slideModels[index]
+  }
+  
+  func SlideMenuViewCellItem(at index: Int) -> SlideMenuView.slideMenuViewCellTypes {
+    switch slideModels[index].state {
+    case .image(_):
+      return .image
+    case .rect(_):
+      return .rect
+    }
+  }
+}
+
 extension SlideManager: SlideModelAccessable {
   func add(_ slideModel: SlideModel) {
     slideModels.append(slideModel)
