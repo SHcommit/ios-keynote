@@ -48,6 +48,7 @@ final class InspectorView: UIView {
   private let backgroundColorLabel = UILabel().set {
     $0.translatesAutoresizingMaskIntoConstraints = false
     $0.text = "배경색"
+    $0.textColor = .black
     $0.font = .systemFont(
       ofSize: Constant.BackgroundColorLabel.textSize,
       weight: .regular)
@@ -73,6 +74,7 @@ final class InspectorView: UIView {
   
   private lazy var alphaView = AlphaView(indexPath: indexPath)
   
+  // MARK: - Properties
   var indexPath: IndexPath {
     guard
       let cell = superview as? UITableViewCell,
@@ -117,17 +119,20 @@ extension InspectorView {
     let userInfoKey = AlphaView.Constant.Stepper.notificatonCenterPostKey
     guard
       let userInfo = notification.userInfo,
-      let message = userInfo[userInfoKey] as? Int
+      let message = userInfo[userInfoKey] as? (alpha: Int, indexPath: IndexPath)
     else {
       return
     }
-    setBgColorStateView(
-      with: .setBgColorAlpha(Double(message)/10.0))
+    setBgColorStateView(with: .setBgColorAlpha(Double(message.alpha)/10.0))
   }
 }
 
 // MARK: - Helper
 extension InspectorView {
+  func configure(with bgColor: UIColor) {
+    setBackgroundColorStateViewBgColor(with: bgColor)
+  }
+  
   func setBgColorStateView(with type: setBGColorStateTypes) {
     switch type {
     case .setText(let text):
@@ -145,6 +150,7 @@ extension InspectorView {
   private func configureUI() {
     backgroundColor = .systemGray6
     translatesAutoresizingMaskIntoConstraints = false
+    setBgColorStateViewTextReversal(with: 1.0)
   }
   
   private func setBackgroundColorStateViewText(with text: String) {
@@ -157,12 +163,28 @@ extension InspectorView {
     DispatchQueue.main.async {
       self.backgroundColorStateLabel.backgroundColor = color
     }
+    setBackgroundColorStateViewText(with: "\(color.toHexString())")
   }
   
   private func setBackgroundColorStateViewBgColorAlpha(with alpha: Double) {
     DispatchQueue.main.async {
       let bgColor = self.backgroundColorStateLabel.backgroundColor
       self.backgroundColorStateLabel.backgroundColor = bgColor?.withAlphaComponent(alpha)
+      self.setBgColorStateViewTextReversal(with: alpha)
+    }
+  }
+  
+  private func setBgColorStateViewTextReversal(with alpha: Double) {
+    guard
+      let bgColor = self.backgroundColorStateLabel.backgroundColor?.brightness()
+    else { return }
+    backgroundColorStateLabel
+      .textColor = bgColor > 0.5 ? .black : .white
+    let textColor = backgroundColorStateLabel.textColor
+    if alpha < 0.5 && textColor == .white {
+      backgroundColorStateLabel.textColor = .black
+    } else if textColor == .black {
+      backgroundColorStateLabel.textColor = .white
     }
   }
   
@@ -188,7 +210,6 @@ extension InspectorView: LayoutSupport {
   }
 }
 
-
 // MARK: - LayoutSupport helper
 private extension InspectorView {
   var backgroundColorLabelConstraints: [NSLayoutConstraint] {
@@ -201,8 +222,7 @@ private extension InspectorView {
   }
   
   var backgroundColorStateLabelConstraints: [NSLayoutConstraint] {
-    print(bgColorStateViewHeightWithVertiSpacing)
-    return [backgroundColorStateLabel.leadingAnchor.constraint(
+    [backgroundColorStateLabel.leadingAnchor.constraint(
       equalTo: leadingAnchor,
       constant: Constant.BackgroundColorStateLabel.spacing.leading),
      backgroundColorStateLabel.topAnchor.constraint(
