@@ -55,7 +55,7 @@ final class KeynoteView: UIView {
     }
   }
   
-  var slideDataViewDelegate: UITableViewDelegate? {
+  var slideDetailViewDelegate: UITableViewDelegate? {
     get {
       slideDetailView.delegate
     } set {
