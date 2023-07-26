@@ -8,7 +8,7 @@
 import UIKit
 
 final class SlideView: UIView {
-  // MARK: - Properties
+  // MARK: - UI Properties
   private lazy var rectView: UIView? = UIView(frame: .zero).set {
     $0.translatesAutoresizingMaskIntoConstraints = false
     $0.backgroundColor = .systemYellow
@@ -30,6 +30,27 @@ final class SlideView: UIView {
   convenience init() {
     self.init(frame: .zero)
   }
+  
+  deinit {
+    NotificationCenter.default.removeObserver(
+      self,
+      name: .AlphaViewStepperValueChanged,
+      object: nil)
+  }
+}
+
+// MARK: - @Objc Helper
+extension SlideView {
+  @objc func setBgStateView(_ notification: Notification) {
+    let userInfoKey = AlphaView.Constant.Stepper.notificatonCenterPostKey
+    guard
+      let userInfo = notification.userInfo,
+      let (alpha, _) = userInfo[userInfoKey] as? (alpha: Int, indexPath: IndexPath)
+    else {
+      return
+    }
+    setRectViewAlpah(with: Double(alpha)/10.0)
+  }
 }
 
 // MARK: - Helper
@@ -42,13 +63,28 @@ extension SlideView{
         addSubview(rectView)
         NSLayoutConstraint.activate(
           rectViewContraints(with: rectModel))
+        bind()
+        
+        setRectViewAlpah(with: rectModel.alpha)
+        setRectViewColor(with: UIColor(with: rectModel.rgb, alpha: rectModel.alpha))
       }
     default:
       break
     }
   }
-  
-  func setRectViewAlpah(with: Double) {
+}
+
+// MARK: - Private helper
+private extension SlideView {
+  func bind() {
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(setBgStateView),
+      name: .AlphaViewStepperValueChanged,
+      object: nil)
+  }
+
+  func setRectViewAlpah(with: CGFloat) {
     DispatchQueue.main.async {
       let bgColor = self.rectView?.backgroundColor
       self.rectView?.backgroundColor = bgColor?.withAlphaComponent(with)
@@ -58,16 +94,6 @@ extension SlideView{
   func setRectViewColor(with: UIColor) {
     DispatchQueue.main.async {
       self.rectView?.backgroundColor = with
-    }
-  }
-}
-
-// MARK: - Private helper
-private extension SlideView {
-  func setRectViewBgColor(with model: RectModel) {
-    DispatchQueue.main.async {
-      let bgColor = self.rectView?.backgroundColor?.withAlphaComponent(model.alpha)
-      self.rectView?.backgroundColor = bgColor
     }
   }
   
