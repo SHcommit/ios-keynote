@@ -8,14 +8,14 @@
 import UIKit
 
 final class SlideContentView: UIView {
-  // MARK: - Properties
+  // MARK: - UI Properties
   private let slideView = SlideView()
   
   // MARK: - Lifecycle
-  override init(frame: CGRect) {
+  private override init(frame: CGRect) {
     super.init(frame: frame)
-    setupSubviewUI(with: slideView)
     configureUI()
+    setupSubviewUI(with: slideView)
   }
   
   required init?(coder: NSCoder) {
@@ -27,22 +27,18 @@ final class SlideContentView: UIView {
   }
 }
 
+// MARK: - Helper
 extension SlideContentView {
-  func setRectColor(with: UIColor) {
-    slideView.setRectViewColor(with: with)
-  }
-  
-  func setRectColorAlpha(with: Double) {
-    slideView.setRectViewAlpah(with: with)
+  func configure(with model: SlideModel) {
+    slideView.configure(with: model)
   }
 }
 
 // MARK: - Private helepr
 extension SlideContentView {
-  func configureUI() {
+  private func configureUI() {
     backgroundColor = .systemGray2
     translatesAutoresizingMaskIntoConstraints = false
-    setupSubviewUI(with: slideView)
   }
 }
 

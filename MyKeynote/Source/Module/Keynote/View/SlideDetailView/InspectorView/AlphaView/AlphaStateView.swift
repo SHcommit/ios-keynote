@@ -21,7 +21,7 @@ final class AlphaStateView: UIView {
     }
   }
   
-  // MARK: - Properties
+  // MARK: - UI Properties
   private let stateLabel: UILabel = .init().set {
     $0.translatesAutoresizingMaskIntoConstraints = false
     $0.text = "10"
@@ -52,7 +52,10 @@ extension AlphaStateView {
       self.stateLabel.text = text
     }
   }
-  
+}
+
+// MARK: - Private helper
+extension AlphaStateView {
   private func configureUI() {
     translatesAutoresizingMaskIntoConstraints = false
     backgroundColor = Constant.bgColor

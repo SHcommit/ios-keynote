@@ -18,10 +18,9 @@ final class SlideDetailView: UITableView {
     super.init(coder: coder)
   }
   
-  convenience init(with rowHeight: CGFloat) {
+  convenience init() {
     self.init(frame: .zero, style: .plain)
-    backgroundColor = .systemPink
-    self.rowHeight = rowHeight
+    backgroundColor = .systemGray6
   }
 }
 
@@ -32,7 +31,6 @@ private extension SlideDetailView {
     register(
       SlideDetailViewCell.self,
       forCellReuseIdentifier: SlideDetailViewCell.id)
-    // 이거 왜 안돼
-    rowHeight = bounds.height
+    isScrollEnabled = false
   }
 }
