@@ -42,18 +42,10 @@ final class SlideDetailViewCell: UITableViewCell {
 
 // MARK: - Helper
 extension SlideDetailViewCell {
-  func configure(with alpha: Double, color: UIColor) {
-    setRectViewColor(with: color)
-    setRectViewAlpha(with: alpha)
-  }
-  
-  // MARK: - Private helper
-  private func setRectViewAlpha(with alpha: Double) {
-    slideContentView.setRectColorAlpha(with: alpha)
-  }
-  
-  private func setRectViewColor(with color: UIColor) {
-    slideContentView.setRectColor(with: color)
+  func configure(with model: SlideModel) {
+    slideContentView.configure(with: model)
+    guard let rectModel = model.getinstance as? RectModel else { return }
+    inspectorView.configure(with: .init(with: rectModel.rgb, alpha: rectModel.alpha))
   }
 }
 
