@@ -25,11 +25,12 @@ final class KeynoteView: UIView {
     }
   }
   
-  // MARK: - Properties
+  // MARK: - UI Properties
   private let slideMenuView = SlideMenuView()
   
-  private lazy var slideDetailView = SlideDetailView()
+  private var slideDetailView = SlideDetailView()
   
+  // MARK: - Properties
   var slideMenuViewDataSource: UITableViewDataSource? {
     get {
       slideMenuView.dataSource
@@ -63,18 +64,34 @@ final class KeynoteView: UIView {
   }
   
   // MARK: - Lifecycle
-  override init(frame: CGRect) {
+  private override init(frame: CGRect) {
     super.init(frame: frame)
-    setupSubviewUI(with: slideMenuView, slideDetailView)
-    backgroundColor = .darkGray 
+    translatesAutoresizingMaskIntoConstraints = false
+    backgroundColor = .darkGray
   }
   
-  convenience init() {
+  convenience init(layoutFrom superView: UIView) {
     self.init(frame: .zero)
+    setLayout(from: superView)
+    layoutIfNeeded()
+    setupSubviewUI(with: slideMenuView, slideDetailView)
+    slideDetailView.rowHeight = bounds.height - UIView.statusBarHeight*2
   }
   
   required init?(coder: NSCoder) {
     super.init(coder: coder)
+  }
+}
+
+// MARK: - Private helper
+private extension KeynoteView {
+  func setLayout(from superView: UIView) {
+    superView.addSubview(self)
+    NSLayoutConstraint.activate([
+      leadingAnchor.constraint(equalTo: superView.leadingAnchor),
+      topAnchor.constraint(equalTo: superView.safeAreaLayoutGuide.topAnchor),
+      trailingAnchor.constraint(equalTo: superView.trailingAnchor),
+      bottomAnchor.constraint(equalTo: superView.safeAreaLayoutGuide.bottomAnchor)])
   }
 }
 
@@ -92,7 +109,7 @@ extension KeynoteView: LayoutSupport {
     [slideMenuView.leadingAnchor.constraint(
       equalTo: leadingAnchor),
      slideMenuView.topAnchor.constraint(
-      equalTo: safeAreaLayoutGuide.topAnchor),
+      equalTo: topAnchor),
      slideMenuView.bottomAnchor.constraint(
       equalTo: bottomAnchor),
      slideMenuView.widthAnchor.constraint(
@@ -103,7 +120,7 @@ extension KeynoteView: LayoutSupport {
     [slideDetailView.leadingAnchor.constraint(
       equalTo: slideMenuView.trailingAnchor),
      slideDetailView.topAnchor.constraint(
-      equalTo: safeAreaLayoutGuide.topAnchor),
+      equalTo: topAnchor),
      slideDetailView.trailingAnchor.constraint(
       equalTo: trailingAnchor),
      slideDetailView.bottomAnchor.constraint(
