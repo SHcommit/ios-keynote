@@ -1,5 +1,5 @@
 //
-//  SlideContentView.swift
+//  SlideDetailContainerView.swift
 //  MyKeynote
 //
 //  Created by 양승현 on 2023/07/21.
@@ -7,9 +7,9 @@
 
 import UIKit
 
-final class SlideContentView: UIView {
+final class SlideDetailContainerView: UIView {
   // MARK: - UI Properties
-  private let slideView = SlideView()
+  private let slideView = SlideDetailContentView()
   
   // MARK: - Lifecycle
   private override init(frame: CGRect) {
@@ -28,14 +28,14 @@ final class SlideContentView: UIView {
 }
 
 // MARK: - Helper
-extension SlideContentView {
+extension SlideDetailContainerView {
   func configure(with model: SlideModel) {
     slideView.configure(with: model)
   }
 }
 
 // MARK: - Private helepr
-extension SlideContentView {
+extension SlideDetailContainerView {
   private func configureUI() {
     backgroundColor = .systemGray2
     translatesAutoresizingMaskIntoConstraints = false
@@ -43,7 +43,7 @@ extension SlideContentView {
 }
 
 // MARK: - LayoutSupport
-extension SlideContentView: LayoutSupport {
+extension SlideDetailContainerView: LayoutSupport {
   func setConstraints() {
     NSLayoutConstraint.activate([
       slideView.leadingAnchor.constraint(equalTo: leadingAnchor),

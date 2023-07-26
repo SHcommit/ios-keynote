@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class SlideView: UIView {
+final class SlideDetailContentView: UIView {
   // MARK: - UI Properties
   private lazy var rectView: UIView? = UIView(frame: .zero).set {
     $0.translatesAutoresizingMaskIntoConstraints = false
@@ -40,7 +40,7 @@ final class SlideView: UIView {
 }
 
 // MARK: - @Objc Helper
-extension SlideView {
+extension SlideDetailContentView {
   @objc func setBgStateView(_ notification: Notification) {
     let userInfoKey = AlphaView.Constant.Stepper.notificatonCenterPostKey
     guard
@@ -54,7 +54,7 @@ extension SlideView {
 }
 
 // MARK: - Helper
-extension SlideView{
+extension SlideDetailContentView{
   func configure(with data: SlideModel) {
     switch data.state {
     case .rect(let rectModel):
@@ -75,7 +75,7 @@ extension SlideView{
 }
 
 // MARK: - Private helper
-private extension SlideView {
+private extension SlideDetailContentView {
   func bind() {
     NotificationCenter.default.addObserver(
       self,

@@ -23,7 +23,7 @@ final class SlideDetailViewCell: UITableViewCell {
   // MARK: - UI Properties
   private let inspectorView = InspectorView()
   
-  private let slideContentView = SlideContentView()
+  private let slideContentView = SlideDetailContainerView()
   
   // MARK: - Lifecycle
   override init(
