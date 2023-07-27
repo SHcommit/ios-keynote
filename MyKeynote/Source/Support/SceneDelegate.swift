@@ -18,12 +18,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     window = UIWindow(windowScene: windowScene)
     let rectModelFactory = RectModelFactory()
     let sm = SlideManager(rectModelFactory: rectModelFactory)
-    let model1 = sm.makeRectModel()
-    let model2 = sm.makeRectModel()
-    let slideModel1 = SlideModel(state: .rect(model1))
-    let slideModel2 = SlideModel(state: .rect(model2))
-    sm.add(slideModel1)
-    sm.add(slideModel2)
+    let models = (0..<7)
+      .map {_ in return SlideModel(state: .rect(sm.makeRectModel())) }
+    models.forEach{ sm.add($0) }
+    
     window?.rootViewController = KeynoteViewController(slideManager: sm)
     window?.makeKeyAndVisible()
   }

@@ -35,4 +35,21 @@ extension UIColor {
     let blueHex = String(format: "%02X", Int(b * 255))
     return "#" + redHex + greenHex + blueHex
   }
+  
+  static func colorWithHex(_ hex: String, alpha: CGFloat = 1.0) -> UIColor? {
+    var hexWithoutSymbol = hex
+    if hexWithoutSymbol.hasPrefix("#") {
+      hexWithoutSymbol = String(hexWithoutSymbol.dropFirst())
+    }
+    
+    var rgbValue: UInt64 = 0
+    Scanner(string: hexWithoutSymbol).scanHexInt64(&rgbValue)
+    
+    let red = CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0
+    let green = CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0
+    let blue = CGFloat(rgbValue & 0x0000FF) / 255.0
+    
+    return UIColor(red: red, green: green, blue: blue, alpha: alpha)
+  }
+
 }

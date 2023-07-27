@@ -20,8 +20,12 @@
 		150411742A65CC490050668C /* KeynoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150411732A65CC490050668C /* KeynoteView.swift */; };
 		150411782A65CF7F0050668C /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150411772A65CF7F0050668C /* UIView+.swift */; };
 		1504117C2A6717F10050668C /* RandomGeneratable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1504117B2A6717F10050668C /* RandomGeneratable.swift */; };
+		1509C9232A70B86C00918D73 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1509C9222A70B86C00918D73 /* UIColor+.swift */; };
 		1535B5F72A684F1500AE218B /* RectModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1535B5F62A684F1500AE218B /* RectModel.swift */; };
 		1535B5FA2A68515400AE218B /* AppSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1535B5F92A68515400AE218B /* AppSetting.swift */; };
+		1539451F2A70DE1700D5C768 /* KeynoteViewController+3-1Mission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1539451E2A70DE1700D5C768 /* KeynoteViewController+3-1Mission.swift */; };
+		153945222A70DE2400D5C768 /* KeynoteViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153945212A70DE2400D5C768 /* KeynoteViewAdapter.swift */; };
+		153945242A71116900D5C768 /* SlideThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153945232A71116900D5C768 /* SlideThumbnailView.swift */; };
 		153D6A162A67211B00093A37 /* UniqueIdRandomGeneratorStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153D6A152A67211A00093A37 /* UniqueIdRandomGeneratorStorage.swift */; };
 		153D6A1C2A677BD200093A37 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153D6A1B2A677BD200093A37 /* String+.swift */; };
 		153D6A1E2A67838A00093A37 /* UInt32+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153D6A1D2A67838A00093A37 /* UInt32+.swift */; };
@@ -50,8 +54,8 @@
 		15BF0B252A69ACA100D6B69B /* KeynoteSlideMenuDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BF0B242A69ACA100D6B69B /* KeynoteSlideMenuDataSource.swift */; };
 		15BF0B272A69B83500D6B69B /* SlideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BF0B262A69B83500D6B69B /* SlideMenuView.swift */; };
 		15BF0B292A69BBC900D6B69B /* InspectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BF0B282A69BBC900D6B69B /* InspectorView.swift */; };
-		15BF0B2B2A69BBE900D6B69B /* SlideContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BF0B2A2A69BBE900D6B69B /* SlideContentView.swift */; };
-		15BF0B2D2A69C0F800D6B69B /* SlideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BF0B2C2A69C0F800D6B69B /* SlideView.swift */; };
+		15BF0B2B2A69BBE900D6B69B /* SlideDetailContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BF0B2A2A69BBE900D6B69B /* SlideDetailContainerView.swift */; };
+		15BF0B2D2A69C0F800D6B69B /* SlideDetailContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BF0B2C2A69C0F800D6B69B /* SlideDetailContentView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,8 +93,12 @@
 		150411732A65CC490050668C /* KeynoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeynoteView.swift; sourceTree = "<group>"; };
 		150411772A65CF7F0050668C /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		1504117B2A6717F10050668C /* RandomGeneratable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomGeneratable.swift; sourceTree = "<group>"; };
+		1509C9222A70B86C00918D73 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		1535B5F62A684F1500AE218B /* RectModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectModel.swift; sourceTree = "<group>"; };
 		1535B5F92A68515400AE218B /* AppSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSetting.swift; sourceTree = "<group>"; };
+		1539451E2A70DE1700D5C768 /* KeynoteViewController+3-1Mission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeynoteViewController+3-1Mission.swift"; sourceTree = "<group>"; };
+		153945212A70DE2400D5C768 /* KeynoteViewAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeynoteViewAdapter.swift; sourceTree = "<group>"; };
+		153945232A71116900D5C768 /* SlideThumbnailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideThumbnailView.swift; sourceTree = "<group>"; };
 		153D6A152A67211A00093A37 /* UniqueIdRandomGeneratorStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniqueIdRandomGeneratorStorage.swift; sourceTree = "<group>"; };
 		153D6A1B2A677BD200093A37 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		153D6A1D2A67838A00093A37 /* UInt32+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UInt32+.swift"; sourceTree = "<group>"; };
@@ -119,8 +127,8 @@
 		15BF0B242A69ACA100D6B69B /* KeynoteSlideMenuDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeynoteSlideMenuDataSource.swift; sourceTree = "<group>"; };
 		15BF0B262A69B83500D6B69B /* SlideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideMenuView.swift; sourceTree = "<group>"; };
 		15BF0B282A69BBC900D6B69B /* InspectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InspectorView.swift; sourceTree = "<group>"; };
-		15BF0B2A2A69BBE900D6B69B /* SlideContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideContentView.swift; sourceTree = "<group>"; };
-		15BF0B2C2A69C0F800D6B69B /* SlideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideView.swift; sourceTree = "<group>"; };
+		15BF0B2A2A69BBE900D6B69B /* SlideDetailContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideDetailContainerView.swift; sourceTree = "<group>"; };
+		15BF0B2C2A69C0F800D6B69B /* SlideDetailContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideDetailContentView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -219,6 +227,7 @@
 		150411652A65C6470050668C /* Keynote */ = {
 			isa = PBXGroup;
 			children = (
+				153945202A70DE1C00D5C768 /* Adapter */,
 				15BF0B212A69AC7600D6B69B /* Protocol */,
 				15BF0B1E2A69ABD000D6B69B /* Extension */,
 				15BF0B172A69967A00D6B69B /* Manager */,
@@ -289,6 +298,14 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		153945202A70DE1C00D5C768 /* Adapter */ = {
+			isa = PBXGroup;
+			children = (
+				153945212A70DE2400D5C768 /* KeynoteViewAdapter.swift */,
+			);
+			path = Adapter;
+			sourceTree = "<group>";
+		};
 		153D6A172A67212500093A37 /* RandomGenerator */ = {
 			isa = PBXGroup;
 			children = (
@@ -327,6 +344,7 @@
 				153D6A1B2A677BD200093A37 /* String+.swift */,
 				153D6A1D2A67838A00093A37 /* UInt32+.swift */,
 				15B383132A6E34A500F747D8 /* Notification+.swift */,
+				1509C9222A70B86C00918D73 /* UIColor+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -354,6 +372,7 @@
 			children = (
 				15BF0B262A69B83500D6B69B /* SlideMenuView.swift */,
 				15B383192A6F869900F747D8 /* SlideMenuViewCell.swift */,
+				153945232A71116900D5C768 /* SlideThumbnailView.swift */,
 			);
 			path = SlideMenuView;
 			sourceTree = "<group>";
@@ -362,7 +381,6 @@
 			isa = PBXGroup;
 			children = (
 				15B3831E2A6F8AEA00F747D8 /* SlideDetailViewCell */,
-				15B383152A6E3EA600F747D8 /* InspectorView */,
 				15B3831C2A6F895F00F747D8 /* SlideDetailView.swift */,
 			);
 			path = SlideDetailView;
@@ -371,8 +389,9 @@
 		15B3831E2A6F8AEA00F747D8 /* SlideDetailViewCell */ = {
 			isa = PBXGroup;
 			children = (
-				15BF0B2A2A69BBE900D6B69B /* SlideContentView.swift */,
-				15BF0B2C2A69C0F800D6B69B /* SlideView.swift */,
+				15B383152A6E3EA600F747D8 /* InspectorView */,
+				15BF0B2A2A69BBE900D6B69B /* SlideDetailContainerView.swift */,
+				15BF0B2C2A69C0F800D6B69B /* SlideDetailContentView.swift */,
 				15B3831F2A6F8AFD00F747D8 /* SlideDetailViewCell.swift */,
 			);
 			path = SlideDetailViewCell;
@@ -398,6 +417,7 @@
 			isa = PBXGroup;
 			children = (
 				15BF0B1F2A69ABFE00D6B69B /* SlideManager+InputOutput.swift */,
+				1539451E2A70DE1700D5C768 /* KeynoteViewController+3-1Mission.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -542,6 +562,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				15BF0B292A69BBC900D6B69B /* InspectorView.swift in Sources */,
+				153945222A70DE2400D5C768 /* KeynoteViewAdapter.swift in Sources */,
 				1535B5FA2A68515400AE218B /* AppSetting.swift in Sources */,
 				153D6A242A67DD8600093A37 /* RGBRandomGenerator.swift in Sources */,
 				150411382A65C46B0050668C /* KeynoteViewController.swift in Sources */,
@@ -551,18 +572,20 @@
 				15B3830E2A6E163200F747D8 /* AlphaStateView.swift in Sources */,
 				15BF0B162A68C5D600D6B69B /* RectModelFactory.swift in Sources */,
 				153D6A282A67DDCD00093A37 /* UniqueIdRandomGenerator.swift in Sources */,
+				1509C9232A70B86C00918D73 /* UIColor+.swift in Sources */,
 				15BF0B202A69ABFE00D6B69B /* SlideManager+InputOutput.swift in Sources */,
 				15B383202A6F8AFD00F747D8 /* SlideDetailViewCell.swift in Sources */,
 				153D6A2C2A682C3800093A37 /* RGBAModel.swift in Sources */,
 				153D6A202A67DD3A00093A37 /* AlphaRandomGenerator.swift in Sources */,
 				150411742A65CC490050668C /* KeynoteView.swift in Sources */,
-				15BF0B2B2A69BBE900D6B69B /* SlideContentView.swift in Sources */,
+				15BF0B2B2A69BBE900D6B69B /* SlideDetailContainerView.swift in Sources */,
 				153D6A222A67DD5700093A37 /* NumberRandomGenerator.swift in Sources */,
 				1535B5F72A684F1500AE218B /* RectModel.swift in Sources */,
+				1539451F2A70DE1700D5C768 /* KeynoteViewController+3-1Mission.swift in Sources */,
 				15BF0B1B2A699DF300D6B69B /* SlideModel.swift in Sources */,
 				1504116B2A65C73E0050668C /* ConvenienceInit.swift in Sources */,
 				153D6A162A67211B00093A37 /* UniqueIdRandomGeneratorStorage.swift in Sources */,
-				15BF0B2D2A69C0F800D6B69B /* SlideView.swift in Sources */,
+				15BF0B2D2A69C0F800D6B69B /* SlideDetailContentView.swift in Sources */,
 				153D6A2A2A68248200093A37 /* UniqueIdRandomGeneratorStorageProtocol.swift in Sources */,
 				15BF0B272A69B83500D6B69B /* SlideMenuView.swift in Sources */,
 				15B3830B2A6E12BF00F747D8 /* AlphaView.swift in Sources */,
@@ -577,6 +600,7 @@
 				15BF0B232A69AC7D00D6B69B /* SlideManagerType.swift in Sources */,
 				1504117C2A6717F10050668C /* RandomGeneratable.swift in Sources */,
 				15BF0B192A69970300D6B69B /* SlideManager.swift in Sources */,
+				153945242A71116900D5C768 /* SlideThumbnailView.swift in Sources */,
 				153D6A262A67DDA000093A37 /* AlphabetRandomGenerator.swift in Sources */,
 				15B3831A2A6F869900F747D8 /* SlideMenuViewCell.swift in Sources */,
 				15B383142A6E34A500F747D8 /* Notification+.swift in Sources */,

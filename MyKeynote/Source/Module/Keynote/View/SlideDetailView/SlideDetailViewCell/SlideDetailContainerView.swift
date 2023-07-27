@@ -32,6 +32,10 @@ extension SlideDetailContainerView {
   func configure(with model: SlideModel) {
     slideView.configure(with: model)
   }
+  
+  func prepareSlideView() {
+    slideView.prepareSlideDetailContentView()
+  }
 }
 
 // MARK: - Private helepr

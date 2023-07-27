@@ -83,6 +83,18 @@ final class KeynoteView: UIView {
   }
 }
 
+// MARK: - Helper
+extension KeynoteView {
+  func setInitialTableViews() {
+    let indexPath = IndexPath(row: 0, section: 0)
+    guard let cell = slideMenuView.cellForRow(at: indexPath) as? SlideMenuViewCell else {
+      return
+    }
+    cell.setImageViewBG(with: true)
+    slideMenuView.reloadRows(at: [indexPath], with: .automatic)
+  }
+}
+
 // MARK: - Private helper
 private extension KeynoteView {
   func setLayout(from superView: UIView) {
@@ -92,6 +104,18 @@ private extension KeynoteView {
       topAnchor.constraint(equalTo: superView.safeAreaLayoutGuide.topAnchor),
       trailingAnchor.constraint(equalTo: superView.trailingAnchor),
       bottomAnchor.constraint(equalTo: superView.safeAreaLayoutGuide.bottomAnchor)])
+  }
+}
+
+// MARK: - KeynoteViewAdapterDelegate
+extension KeynoteView: KeynoteViewAdapterDelegate {
+  func scrollToRow(with indexPath: IndexPath, rectInfo: RectModel) {
+    guard
+      let cell = slideDetailView.cellForRow(at: indexPath) as? SlideDetailViewCell
+    else { return }
+    cell.prepareForReuse()
+    cell.configure(with: .init(state: .rect(rectInfo)))
+    slideDetailView.selectRow(at: indexPath, animated: false, scrollPosition: .top)
   }
 }
 

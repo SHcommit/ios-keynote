@@ -14,14 +14,19 @@ class KeynoteViewController: UIViewController {
   private var keynoteView: KeynoteView!
   
   // MARK: - Properties
-  private var slideManager: (SlideManagerType & KeynoteSlideMenuDataSource)!
+  private var slideManager: (SlideManagerType & KeynoteViewAdapterDataSource & SlideModelAccessable)!
   
   private lazy var inputEvent = SlideManager.Input()
   
   private var subscriptions = Set<AnyCancellable>()
   
+  private var keynoteAdapter: KeynoteViewAdapter!
+  
+  private override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+  }
   // MARK: - Lifecycle
-  init(slideManager: SlideManagerType & KeynoteSlideMenuDataSource) {
+  init(slideManager: SlideManagerType & KeynoteViewAdapterDataSource & SlideModelAccessable) {
     super.init(nibName: nil, bundle: nil)
     self.slideManager = slideManager
   }
@@ -35,8 +40,14 @@ class KeynoteViewController: UIViewController {
     view.backgroundColor = .white
     keynoteView = KeynoteView(layoutFrom: view)
     missionWeek3_1()
-    keynoteView.slideDatailViewDataSource = self
     bind()
+    keynoteAdapter = .init(
+      dataSource: slideManager,
+      delegate: keynoteView,
+      slideMenuViewDataSource: &keynoteView.slideMenuViewDataSource,
+      slideMenuViewDelegate: &keynoteView.slideMenuViewDelegate,
+      slideDetailViewDataSource: &keynoteView.slideDatailViewDataSource,
+      slideDetailViewDelegate: &keynoteView.slideDetailViewDelegate)
   }
 }
 
@@ -54,61 +65,6 @@ private extension KeynoteViewController {
     switch state {
     case .none:
       break
-    }
-  }
-}
-
-// MARK: - UITableViewDataSource
-extension KeynoteViewController: UITableViewDataSource {
-  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return slideManager.numberOfItems
-  }
-  
-  func tableView(
-    _ tableView: UITableView,
-    cellForRowAt indexPath: IndexPath
-  ) -> UITableViewCell {
-    if tableView is SlideDetailView {
-      guard
-        let cell = tableView.dequeueReusableCell(
-          withIdentifier: SlideDetailViewCell.id,
-          for: indexPath) as? SlideDetailViewCell
-      else { return .init(style: .default, reuseIdentifier: SlideMenuViewCell.id) }
-      let item = slideManager.cellItem(at: indexPath.row)
-      cell.configure(with: item)
-      return cell
-    }
-    return .init(frame: .zero)
-  }
-}
-
-fileprivate extension KeynoteViewController {
-  func missionWeek3_1() {
-    let rectModelFactory = RectModelFactory()
-    let uniqueIdStorage = UniqueIdRandomGeneratorStorage
-      .shared
-    
-    let rectModelDescriptions = (0..<4).map {
-      let uniqueId = uniqueIdStorage.create(
-        from: rectModelFactory)
-      let rgb = rectModelFactory.makeRGBRandomValue()
-      let alpha = rectModelFactory.makeAlphaRandomValue()
-      
-      let alphaModel = AlphaModel(alpha: alpha)
-      
-      let rgbaModel = RGBAModel(
-        red: rgb.R,
-        green: rgb.G,
-        blue: rgb.B,
-        alpha: alphaModel)
-      let rectModel = RectModel(
-        uniqueID: uniqueId,
-        width: Int.random(in: 100...400),
-        rgba: rgbaModel)
-      return "Rect\($0+1) " + rectModel.description
-    }
-    rectModelDescriptions.forEach {
-      os_log("%@",type: .default, $0)
     }
   }
 }

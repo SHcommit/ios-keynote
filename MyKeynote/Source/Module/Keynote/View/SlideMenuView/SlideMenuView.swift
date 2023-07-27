@@ -8,6 +8,19 @@
 import UIKit
 
 final class SlideMenuView: UITableView {
+  // MARK: - Constant
+  enum slideMenuViewCellTypes {
+    case rect
+    case image
+    
+    var imageName: String {
+      switch self {
+      case .image: return "slideMenuImage"
+      case .rect: return "slideMenuRect"
+      }
+    }
+  }
+  
   // MARK: - Lifecycle
   private override init(frame: CGRect, style: UITableView.Style) {
     super.init(frame: frame, style: style)
@@ -31,5 +44,6 @@ private extension SlideMenuView {
     register(
       SlideMenuViewCell.self,
       forCellReuseIdentifier: SlideMenuViewCell.id)
+    rowHeight = SlideMenuViewCell.Constant.intrinsicContentSize.height
   }
 }

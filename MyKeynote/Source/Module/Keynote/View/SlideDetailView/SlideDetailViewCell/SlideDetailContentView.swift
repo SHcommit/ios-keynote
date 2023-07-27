@@ -13,7 +13,7 @@ final class SlideDetailContentView: UIView {
     $0.translatesAutoresizingMaskIntoConstraints = false
     $0.backgroundColor = .systemYellow
     $0.layer.borderColor = UIColor.black.cgColor
-    $0.layer.borderWidth = 0.5
+    $0.layer.borderWidth = 0.8
   }
   
   // MARK: - Lifecycle
@@ -64,12 +64,17 @@ extension SlideDetailContentView{
         NSLayoutConstraint.activate(
           rectViewContraints(with: rectModel))
         bind()
-        
-        setRectViewAlpah(with: rectModel.alpha)
-        setRectViewColor(with: UIColor(with: rectModel.rgb, alpha: rectModel.alpha))
       }
+      setRectViewAlpah(with: rectModel.alpha)
+      setRectViewColor(with: UIColor(with: rectModel.rgb, alpha: rectModel.alpha))
     default:
       break
+    }
+  }
+  
+  func prepareSlideDetailContentView() {
+    DispatchQueue.main.async {
+      self.rectView?.backgroundColor = .white
     }
   }
 }

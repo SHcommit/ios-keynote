@@ -10,12 +10,12 @@ import UIKit
 final class InspectorView: UIView {
   // MARK: - Constant
   struct Constant {
-    enum BackgroundColorLabel {
+    enum RectColorTitleLabel {
       static let textSize: CGFloat = 16
       static let spacing: UISpacing = .init(leading:7, top: 7)
     }
     
-    enum BackgroundColorStateLabel {
+    enum RectColorHexLabel {
       static let textSize: CGFloat = 16
       static let spacing: UISpacing = .init(leading:7, top: 7, trailing: 7)
       static let bgColor: UIColor = .systemYellow
@@ -34,33 +34,33 @@ final class InspectorView: UIView {
   }
   
   enum setBGColorStateTypes {
-    case setText(String)
-    case setBgColor(UIColor)
-    case setBgColorAlpha(Double)
+    case setRectColorHexLabelColor(UIColor)
+    case setRectColorHexLabelBgAlpha(Double)
+    case setRectColorHexLabelText(String)
   }
   
   var bgColorStateViewHeightWithVertiSpacing: CGFloat {
-    backgroundColorStateLabel.sizeToFit()
-    return backgroundColorStateLabel.bounds.height + Constant.BackgroundColorStateLabel.innerVertiSpacing * 2.0
+    rectColorHexLabel.sizeToFit()
+    return rectColorHexLabel.bounds.height + Constant.RectColorHexLabel.innerVertiSpacing * 2.0
   }
   
   // MARK: - UI Properties
-  private let backgroundColorLabel = UILabel().set {
+  private let rectColorTitleLabel = UILabel().set {
     $0.translatesAutoresizingMaskIntoConstraints = false
     $0.text = "배경색"
     $0.textColor = .black
     $0.font = .systemFont(
-      ofSize: Constant.BackgroundColorLabel.textSize,
+      ofSize: Constant.RectColorTitleLabel.textSize,
       weight: .regular)
   }
   
-  private let backgroundColorStateLabel = UILabel().set {
+  private let rectColorHexLabel = UILabel().set {
     $0.translatesAutoresizingMaskIntoConstraints = false
     $0.text = "0x..."
-    $0.font = .systemFont(ofSize: Constant.BackgroundColorStateLabel.textSize)
-    $0.backgroundColor = Constant.BackgroundColorStateLabel.bgColor
+    $0.font = .systemFont(ofSize: Constant.RectColorHexLabel.textSize)
+    $0.backgroundColor = Constant.RectColorHexLabel.bgColor
     $0.textAlignment = .center
-    $0.layer.cornerRadius = Constant.BackgroundColorStateLabel.radius
+    $0.layer.cornerRadius = Constant.RectColorHexLabel.radius
     $0.clipsToBounds = true
   }
   
@@ -90,8 +90,8 @@ final class InspectorView: UIView {
     super.init(frame: frame)
     configureUI()
     setupSubviewUI(
-      with: backgroundColorLabel,
-      backgroundColorStateLabel,
+      with: rectColorTitleLabel,
+      rectColorHexLabel,
       alphaLabel,
       alphaView)
     bind()
@@ -123,25 +123,41 @@ extension InspectorView {
     else {
       return
     }
-    setBgColorStateView(with: .setBgColorAlpha(Double(message.alpha)/10.0))
+    setBgColorStateView(with: .setRectColorHexLabelBgAlpha(Double(message.alpha)/10.0))
   }
 }
 
 // MARK: - Helper
 extension InspectorView {
-  func configure(with bgColor: UIColor) {
-    setBackgroundColorStateViewBgColor(with: bgColor)
+  func configure(with alpha: Double, color: UIColor) {
+    let alphaStr = String(Int(alpha))
+    let types: [setBGColorStateTypes] = [
+      .setRectColorHexLabelColor(color),
+      .setRectColorHexLabelBgAlpha(alpha),
+      .setRectColorHexLabelText(color.toHexString())]
+    
+    _=types.map {
+      setBgColorStateView(with: $0)
+    }
+  setAlphaViewAlphaValueState(with: alphaStr)
   }
   
   func setBgColorStateView(with type: setBGColorStateTypes) {
     switch type {
-    case .setText(let text):
-      setBackgroundColorStateViewText(with: text)
-    case .setBgColorAlpha(let alphaValue):
-      setBackgroundColorStateViewBgColorAlpha(with: alphaValue)
-    case .setBgColor(let color):
-      setBackgroundColorStateViewBgColor(with: color)
+    case .setRectColorHexLabelBgAlpha(let alphaValue):
+      setRectColorHexLabelBgAlpha(with: alphaValue)
+    case .setRectColorHexLabelColor(let color):
+      setRectColorHexLabelColor(with: color)
+    case .setRectColorHexLabelText(let bgColorHexStr):
+      setRectColorHexLabelText(with: bgColorHexStr)
     }
+  }
+  
+  func prepareInspectorView() {
+    rectColorHexLabel.text = ""
+    rectColorHexLabel.backgroundColor = .white
+    alphaView.setStateView(with: "")
+    
   }
 }
 
@@ -153,38 +169,48 @@ extension InspectorView {
     setBgColorStateViewTextReversal(with: 1.0)
   }
   
-  private func setBackgroundColorStateViewText(with text: String) {
+  private func setRectColorHexLabelText(with text: String) {
     DispatchQueue.main.async {
-      self.backgroundColorStateLabel.text = text
+      self.rectColorHexLabel.text = text
     }
   }
   
-  private func setBackgroundColorStateViewBgColor(with color: UIColor) {
+  private func setRectColorHexLabelColor(with color: UIColor) {
     DispatchQueue.main.async {
-      self.backgroundColorStateLabel.backgroundColor = color
+      self.rectColorHexLabel.backgroundColor = color
     }
-    setBackgroundColorStateViewText(with: "\(color.toHexString())")
+      setRectColorHexLabelText(with: "\(color.toHexString())")
   }
   
-  private func setBackgroundColorStateViewBgColorAlpha(with alpha: Double) {
+  private func setRectColorHexLabelBgAlpha(with alpha: Double) {
     DispatchQueue.main.async {
-      let bgColor = self.backgroundColorStateLabel.backgroundColor
-      self.backgroundColorStateLabel.backgroundColor = bgColor?.withAlphaComponent(alpha)
+      let bgColor = self.rectColorHexLabel.backgroundColor
+      self.rectColorHexLabel.backgroundColor = bgColor?.withAlphaComponent(alpha)
       self.setBgColorStateViewTextReversal(with: alpha)
     }
   }
   
   private func setBgColorStateViewTextReversal(with alpha: Double) {
     guard
-      let bgColor = self.backgroundColorStateLabel.backgroundColor?.brightness()
+      let bgColor = self.rectColorHexLabel.backgroundColor?.brightness()
     else { return }
-    backgroundColorStateLabel
+    rectColorHexLabel
       .textColor = bgColor > 0.5 ? .black : .white
-    let textColor = backgroundColorStateLabel.textColor
+    let textColor = rectColorHexLabel.textColor
     if alpha < 0.5 && textColor == .white {
-      backgroundColorStateLabel.textColor = .black
+      rectColorHexLabel.textColor = .black
     } else if textColor == .black {
-      backgroundColorStateLabel.textColor = .white
+      rectColorHexLabel.textColor = .white
+    }
+  }
+  
+  private func setAlphaViewAlphaValueState(with alphaStr: String) {
+    alphaView.setStateView(with: alphaStr)
+  }
+  
+  private func setRectColorHexLabel(with hexString: String) {
+    DispatchQueue.main.async {
+      self.rectColorHexLabel.text = hexString
     }
   }
   
@@ -200,8 +226,8 @@ extension InspectorView {
 // MARK: - LayoutSupport
 extension InspectorView: LayoutSupport {
   func setConstraints() {
-    _=[backgroundColorLabelConstraints,
-       backgroundColorStateLabelConstraints,
+    _=[rectColorTitleLabelConstraints,
+       RectColorHexLabelConstraints,
        alphaLabelConstraints,
        alphaViewConstraitns
     ].map {
@@ -212,26 +238,26 @@ extension InspectorView: LayoutSupport {
 
 // MARK: - LayoutSupport helper
 private extension InspectorView {
-  var backgroundColorLabelConstraints: [NSLayoutConstraint] {
-    [backgroundColorLabel.leadingAnchor.constraint(
+  var rectColorTitleLabelConstraints: [NSLayoutConstraint] {
+    [rectColorTitleLabel.leadingAnchor.constraint(
       equalTo: leadingAnchor,
-      constant: Constant.BackgroundColorLabel.spacing.leading),
-     backgroundColorLabel.topAnchor.constraint(
+      constant: Constant.RectColorTitleLabel.spacing.leading),
+     rectColorTitleLabel.topAnchor.constraint(
       equalTo: topAnchor,
-      constant: Constant.BackgroundColorLabel.spacing.top)]
+      constant: Constant.RectColorTitleLabel.spacing.top)]
   }
   
-  var backgroundColorStateLabelConstraints: [NSLayoutConstraint] {
-    [backgroundColorStateLabel.leadingAnchor.constraint(
+  var RectColorHexLabelConstraints: [NSLayoutConstraint] {
+    [rectColorHexLabel.leadingAnchor.constraint(
       equalTo: leadingAnchor,
-      constant: Constant.BackgroundColorStateLabel.spacing.leading),
-     backgroundColorStateLabel.topAnchor.constraint(
-      equalTo: backgroundColorLabel.bottomAnchor,
-      constant: Constant.BackgroundColorStateLabel.spacing.top),
-     backgroundColorStateLabel.trailingAnchor.constraint(
+      constant: Constant.RectColorHexLabel.spacing.leading),
+     rectColorHexLabel.topAnchor.constraint(
+      equalTo: rectColorTitleLabel.bottomAnchor,
+      constant: Constant.RectColorHexLabel.spacing.top),
+     rectColorHexLabel.trailingAnchor.constraint(
       equalTo: trailingAnchor,
-      constant: -Constant.BackgroundColorStateLabel.spacing.trailing),
-     backgroundColorStateLabel.heightAnchor.constraint(
+      constant: -Constant.RectColorHexLabel.spacing.trailing),
+     rectColorHexLabel.heightAnchor.constraint(
       equalToConstant: bgColorStateViewHeightWithVertiSpacing)]
   }
   
@@ -240,7 +266,7 @@ private extension InspectorView {
       equalTo: leadingAnchor,
       constant: Constant.AlphaLabel.spacing.leading),
      alphaLabel.topAnchor.constraint(
-      equalTo: backgroundColorStateLabel.bottomAnchor,
+      equalTo: rectColorHexLabel.bottomAnchor,
       constant: Constant.AlphaLabel.spacing.top)]
   }
   

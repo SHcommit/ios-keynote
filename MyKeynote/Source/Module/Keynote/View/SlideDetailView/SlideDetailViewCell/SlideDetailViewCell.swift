@@ -38,14 +38,27 @@ final class SlideDetailViewCell: UITableViewCell {
   required init?(coder: NSCoder) {
     super.init(coder: coder)
   }
+  
+  override func prepareForReuse() {
+    super.prepareForReuse()
+    inspectorView.prepareInspectorView()
+    slideContentView.prepareSlideView()
+  }
 }
 
 // MARK: - Helper
 extension SlideDetailViewCell {
   func configure(with model: SlideModel) {
-    slideContentView.configure(with: model)
-    guard let rectModel = model.getinstance as? RectModel else { return }
-    inspectorView.configure(with: .init(with: rectModel.rgb, alpha: rectModel.alpha))
+    switch model.state {
+    case .rect(let rectModel):
+      inspectorView.configure(
+        with: rectModel.alpha,
+        color: UIColor(with: rectModel.rgb, alpha: rectModel.alpha))
+      slideContentView.configure(with: model)
+    case .image(let imageStr):
+      // TODO: - image config impl..
+      print(imageStr)
+    }
   }
 }
 

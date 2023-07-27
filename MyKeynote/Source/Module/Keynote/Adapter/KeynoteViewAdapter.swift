@@ -19,15 +19,24 @@ protocol KeynoteViewAdapterDataSource: AnyObject {
   ) -> SlideMenuView.slideMenuViewCellTypes
 }
 
-protocol SlideDetailViewDelegate: AnyObject { }
+protocol KeynoteViewAdapterDelegate: AnyObject {
+  func scrollToRow(with indexPath: IndexPath, rectInfo: RectModel)
+}
 
 final class KeynoteViewAdapter: NSObject {
   // MARK: - Properteis
   weak var dataSource: KeynoteViewAdapterDataSource?
   
+  weak var delegate: KeynoteViewAdapterDelegate?
+  
+  private var prevSelectedIndexPath: IndexPath = IndexPath(row: 0, section: 0)
+  
+  private var isDoneInitialSetting = false
+  
   // MARK: - Lifecycle
   init(
     dataSource: KeynoteViewAdapterDataSource,
+    delegate: KeynoteViewAdapterDelegate,
     slideMenuViewDataSource: inout UITableViewDataSource?,
     slideMenuViewDelegate: inout UITableViewDelegate?,
     slideDetailViewDataSource: inout UITableViewDataSource?,
@@ -35,11 +44,11 @@ final class KeynoteViewAdapter: NSObject {
   ) {
     super.init()
     self.dataSource = dataSource
+    self.delegate = delegate
     slideMenuViewDataSource = self
     slideMenuViewDelegate = self
     slideDetailViewDataSource = self
     slideDetailViewDelegate = self
-//    completionHandler()
   }
 }
 
@@ -56,29 +65,80 @@ extension KeynoteViewAdapter: UITableViewDataSource {
         withIdentifier: SlideDetailViewCell.id,
         for: indexPath) as? SlideDetailViewCell
       else { return .init(style: .default, reuseIdentifier: SlideMenuViewCell.id) }
-      guard let item = dataSource?.slideDetailViewCellItem(at: indexPath.row) else {
+      
+      guard let item = dataSource?.slideDetailViewCellItem(at: indexPath.row) as? SlideModel else {
         return .init(style: .default, reuseIdentifier: "none")
       }
+      guard let rectModel = item.getinstance as? RectModel else {
+        return .init(style: .default, reuseIdentifier: "none")
+      }
+      
+      print("index: \(indexPath.row)", rectModel.description)
       cell.configure(with: item)
       return cell
     case is SlideMenuView:
-      return .init()
+      guard
+        let cell = tableView.dequeueReusableCell(
+          withIdentifier: SlideMenuViewCell.id,
+          for: indexPath) as? SlideMenuViewCell,
+        let item = dataSource?.SlideMenuViewCellItem(at: indexPath.row),
+        let image = UIImage(named: item.imageName)
+      else { return .init(style: .default, reuseIdentifier: "none") }
+      cell.configure(with: image, selected: false, indexText: "\(indexPath.row+1)")
+      if !isDoneInitialSetting && indexPath.row == 0 {
+        isDoneInitialSetting.toggle()
+        cell.setImageViewBG(with: true)
+      }
+      
+      return cell
     default:
       return .init(style: .default, reuseIdentifier: "none")
     }
   }
 }
 
+// MARK: - Private helper UITableViewDataSource
+extension KeynoteViewAdapter {
+
+}
+
+
+// MARK: - UITableViewDelegate
 extension KeynoteViewAdapter: UITableViewDelegate {
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    /// 여기서 해야할 것은 메뉴뷰 터치되면 디테일 뷰 위치 동기화 !!
+    switch tableView {
+    case is SlideDetailView:
+      print("DEBUG: Is slideDetailView tapped?")
+    case is SlideMenuView:
+      break
+    default: break
+    }
+    
     switch tableView {
     case is SlideDetailView:
       break
     case is SlideMenuView:
-      break
+      guard let slideMenuView = tableView as? SlideMenuView else {
+        break
+      }
+      guard
+        let prevCell = slideMenuView.cellForRow(at: prevSelectedIndexPath) as? SlideMenuViewCell,
+        let curCell = slideMenuView.cellForRow(at: indexPath) as? SlideMenuViewCell,
+        let rectInfo = dataSource?.slideDetailViewCellItem(at: indexPath.row).getinstance as? RectModel
+      else {
+        break
+      }
+      prevCell.setImageViewBG(with: false)
+      curCell.setImageViewBG(with: true)
+      delegate?.scrollToRow(with: indexPath,rectInfo: rectInfo)
     default:
       break
+    }
+    prevSelectedIndexPath = indexPath
+    
+    //이게 만들어져야.. 좋은데,,
+    guard let detailView = tableView as? SlideDetailView else {
+      return
     }
   }
 }

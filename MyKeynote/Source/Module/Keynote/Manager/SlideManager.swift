@@ -53,6 +53,8 @@ extension SlideManager {
       return
     }
     rectModel.setAlpha(with: UInt8(alpha))
+    print("DEBUG: Update rectAlpha: \(rectModel.alpha)")
+    print(slideModels)
   }
 }
 
@@ -63,7 +65,8 @@ extension SlideManager {
     let uniqueId = uniqueIdStorage.create(
       from: rectModelFactory)
     let rgb = rectModelFactory.makeRGBRandomValue()
-    let alpha = rectModelFactory.makeAlphaRandomValue()
+    // let alpha = rectModelFactory.makeAlphaRandomValue()
+    let alpha: UInt8 = 10
     
     let alphaModel = AlphaModel(alpha: alpha)
     

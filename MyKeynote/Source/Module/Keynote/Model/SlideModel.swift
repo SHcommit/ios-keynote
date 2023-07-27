@@ -10,7 +10,7 @@ import Foundation
 struct SlideModel {
   enum State {
     case rect (RectModel)
-    case image(AlphaView)
+    case image(String)
   }
   
   // MARK: - Properties
@@ -26,8 +26,8 @@ struct SlideModel {
     switch state {
     case .rect(let rectModel):
       return rectModel
-    default:
-      return nil
+    case .image(let imageStr):
+      return imageStr
     }
   }
 }

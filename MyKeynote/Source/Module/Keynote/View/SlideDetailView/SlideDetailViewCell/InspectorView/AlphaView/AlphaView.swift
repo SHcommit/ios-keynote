@@ -69,12 +69,15 @@ extension AlphaView {
   }
 }
 
-// MARK: - Private helper
-private extension AlphaView {
+// MARK: - Helper
+extension AlphaView {
   func setStateView(with text: String) {
     stateView.setStateLabel(with: text)
   }
-  
+}
+
+// MARK: - Private helper
+private extension AlphaView {
   func notifyStepperValueChangedToObservers(with alpha: Int) {
     let key: some Hashable = Constant
       .Stepper
