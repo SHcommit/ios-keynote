@@ -10,11 +10,7 @@ import Combine
 
 extension SlideManager {
   struct Input {
-    let appear: PassthroughSubject<Void,Never>
-    
-    init(appear: PassthroughSubject<Void, Never> = .init()) {
-      self.appear = appear
-    }
+    let appear: AnyPublisher<Void,Never>
   }
   
   enum State {

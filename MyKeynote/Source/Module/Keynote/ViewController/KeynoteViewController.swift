@@ -11,12 +11,12 @@ import Combine
 
 class KeynoteViewController: UIViewController {
   // MARK: - UI Properties
-  private var keynoteView: KeynoteView!
+  private var keynoteView: KeynoteView! 
   
   // MARK: - Properties
   private var slideManager: (SlideManagerType & KeynoteViewAdapterDataSource & SlideModelAccessable)!
   
-  private lazy var inputEvent = SlideManager.Input()
+  private let appear = PassthroughSubject<Void,Never>()
   
   private var subscriptions = Set<AnyCancellable>()
   
@@ -52,7 +52,8 @@ class KeynoteViewController: UIViewController {
 // MARK: - Private helper
 private extension KeynoteViewController {
   func bind() {
-    let output = slideManager.transform(input: inputEvent)
+    let input = SlideManager.Input(appear: appear.eraseToAnyPublisher())
+    let output = slideManager.transform(input: input)
     
     output.sink { [weak self] in
       self?.render($0)
