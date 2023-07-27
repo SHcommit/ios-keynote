@@ -7,22 +7,6 @@
 
 import UIKit
 
-protocol KeynoteViewAdapterDataSource: AnyObject {
-  var numberOfItems: Int { get }
-  
-  func slideDetailViewCellItem(
-    at index: Int
-  ) -> SlideModel
-  
-  func SlideMenuViewCellItem(
-    at index: Int
-  ) -> SlideMenuView.slideMenuViewCellTypes
-}
-
-protocol KeynoteViewAdapterDelegate: AnyObject {
-  func scrollToRow(with indexPath: IndexPath, rectInfo: RectModel)
-}
-
 final class KeynoteViewAdapter: NSObject {
   // MARK: - Properteis
   weak var dataSource: KeynoteViewAdapterDataSource?
@@ -38,17 +22,13 @@ final class KeynoteViewAdapter: NSObject {
     dataSource: KeynoteViewAdapterDataSource,
     delegate: KeynoteViewAdapterDelegate,
     slideMenuViewDataSource: inout UITableViewDataSource?,
-    slideMenuViewDelegate: inout UITableViewDelegate?,
-    slideDetailViewDataSource: inout UITableViewDataSource?,
-    slideDetailViewDelegate: inout UITableViewDelegate?
+    slideMenuViewDelegate: inout UITableViewDelegate?
   ) {
     super.init()
     self.dataSource = dataSource
     self.delegate = delegate
     slideMenuViewDataSource = self
     slideMenuViewDelegate = self
-    slideDetailViewDataSource = self
-    slideDetailViewDelegate = self
   }
 }
 
@@ -59,86 +39,67 @@ extension KeynoteViewAdapter: UITableViewDataSource {
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    switch tableView {
-    case is SlideDetailView:
-      guard let cell = tableView.dequeueReusableCell(
-        withIdentifier: SlideDetailViewCell.id,
-        for: indexPath) as? SlideDetailViewCell
-      else { return .init(style: .default, reuseIdentifier: SlideMenuViewCell.id) }
-      
-      guard let item = dataSource?.slideDetailViewCellItem(at: indexPath.row) as? SlideModel else {
-        return .init(style: .default, reuseIdentifier: "none")
-      }
-      guard let rectModel = item.getinstance as? RectModel else {
-        return .init(style: .default, reuseIdentifier: "none")
-      }
-      
-      print("index: \(indexPath.row)", rectModel.description)
-      cell.configure(with: item)
-      return cell
-    case is SlideMenuView:
-      guard
-        let cell = tableView.dequeueReusableCell(
-          withIdentifier: SlideMenuViewCell.id,
-          for: indexPath) as? SlideMenuViewCell,
-        let item = dataSource?.SlideMenuViewCellItem(at: indexPath.row),
-        let image = UIImage(named: item.imageName)
-      else { return .init(style: .default, reuseIdentifier: "none") }
-      cell.configure(with: image, selected: false, indexText: "\(indexPath.row+1)")
-      if !isDoneInitialSetting && indexPath.row == 0 {
-        isDoneInitialSetting.toggle()
-        cell.setImageViewBG(with: true)
-      }
-      
-      return cell
-    default:
-      return .init(style: .default, reuseIdentifier: "none")
+    guard
+      let cell = tableView.dequeueReusableCell(
+        withIdentifier: SlideMenuViewCell.id,
+        for: indexPath) as? SlideMenuViewCell,
+      let item = dataSource?.SlideMenuViewCellItem(at: indexPath.row),
+      let image = UIImage(named: item.imageName)
+    else { return .init(style: .default, reuseIdentifier: "none") }
+    
+    cell.configure(with: image, selected: false, indexText: "\(indexPath.row+1)")
+    
+    if isDoneInitialSettingInSlideMenuView(indexPath.row) {
+      setInitialSettingInSlideMenuView(cell)
     }
+    return cell
+    
   }
 }
 
 // MARK: - Private helper UITableViewDataSource
-extension KeynoteViewAdapter {
-
+private extension KeynoteViewAdapter {
+  func isDoneInitialSettingInSlideMenuView(_ index: Int) -> Bool {
+    return !isDoneInitialSetting && index == 0
+  }
+  
+  func setInitialSettingInSlideMenuView(_ cell: SlideMenuViewCell) {
+      isDoneInitialSetting.toggle()
+      cell.setImageViewBG(with: true)
+      guard let detailItem = dataSource?
+        .slideDetailViewCellItem(at: 0)
+        .getinstance as? RectModel
+      else {
+        return
+      }
+      delegate?.updateSlideView(
+        with: .init(row: 0, section: 0),
+        rectInfo: detailItem)
+  }
 }
 
 
 // MARK: - UITableViewDelegate
 extension KeynoteViewAdapter: UITableViewDelegate {
-  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    switch tableView {
-    case is SlideDetailView:
-      print("DEBUG: Is slideDetailView tapped?")
-    case is SlideMenuView:
-      break
-    default: break
-    }
-    
-    switch tableView {
-    case is SlideDetailView:
-      break
-    case is SlideMenuView:
-      guard let slideMenuView = tableView as? SlideMenuView else {
-        break
-      }
-      guard
-        let prevCell = slideMenuView.cellForRow(at: prevSelectedIndexPath) as? SlideMenuViewCell,
-        let curCell = slideMenuView.cellForRow(at: indexPath) as? SlideMenuViewCell,
-        let rectInfo = dataSource?.slideDetailViewCellItem(at: indexPath.row).getinstance as? RectModel
-      else {
-        break
-      }
-      prevCell.setImageViewBG(with: false)
-      curCell.setImageViewBG(with: true)
-      delegate?.scrollToRow(with: indexPath,rectInfo: rectInfo)
-    default:
-      break
-    }
-    prevSelectedIndexPath = indexPath
-    
-    //이게 만들어져야.. 좋은데,,
-    guard let detailView = tableView as? SlideDetailView else {
+  func tableView(
+    _ tableView: UITableView,
+    didSelectRowAt indexPath: IndexPath
+  ) {
+    guard let slideMenuView = tableView as? SlideMenuView else {
       return
     }
+    guard
+      let prevCell = slideMenuView.cellForRow(at: prevSelectedIndexPath) as? SlideMenuViewCell,
+      let curCell = slideMenuView.cellForRow(at: indexPath) as? SlideMenuViewCell,
+      let rectInfo = dataSource?.slideDetailViewCellItem(at: indexPath.row).getinstance as? RectModel
+    else {
+      return
+    }
+    prevCell.setImageViewBG(with: false)
+    delegate?.updateSlideView(with: indexPath,rectInfo: rectInfo)
+    
+    // TODO: - prevSelectedIdx, curSelectedIdx같으면 슬라이드 내용 히든
+    prevSelectedIndexPath = indexPath
+    curCell.setImageViewBG(with: true)
   }
 }
