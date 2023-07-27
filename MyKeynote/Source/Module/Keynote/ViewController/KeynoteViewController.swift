@@ -45,9 +45,7 @@ class KeynoteViewController: UIViewController {
       dataSource: slideManager,
       delegate: keynoteView,
       slideMenuViewDataSource: &keynoteView.slideMenuViewDataSource,
-      slideMenuViewDelegate: &keynoteView.slideMenuViewDelegate,
-      slideDetailViewDataSource: &keynoteView.slideDatailViewDataSource,
-      slideDetailViewDelegate: &keynoteView.slideDetailViewDelegate)
+      slideMenuViewDelegate: &keynoteView.slideMenuViewDelegate)
   }
 }
 
