@@ -5,13 +5,14 @@
 //  Created by 양승현 on 2023/07/20.
 //
 
-final class RectModel {
+struct RectModel {
   typealias RGB = RGBAModel.RGB
+  
   // MARK: - Constant
   typealias AlphaConstant = AppSetting.UIConstAlpha
   
   // MARK: - Properties
-  private let uniqueID: String
+  private(set) var uniqueID: String
   
   private(set) var width: Int
   
@@ -38,14 +39,6 @@ final class RectModel {
 
 // MARK: - Helper
 extension RectModel {
-  func plusAlpha() {
-    rgba.plusAlpha()
-  }
-  
-  func minusAlpha() {
-    rgba.minusAlpha()
-  }
-  
   var isMinusAlphaMutableState: Bool {
     let minAlpha = AlphaConstant.minAlpha
     let curAlpha = rgba.alphaValue

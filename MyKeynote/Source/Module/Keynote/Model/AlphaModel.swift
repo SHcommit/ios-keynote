@@ -8,7 +8,9 @@
 final class AlphaModel {
   // MARK: - Constant
   private(set) var minValue: UInt8 = AppSetting.UIConstAlpha.minAlpha
+  
   private(set) var maxValue: UInt8 = AppSetting.UIConstAlpha.maxAlpha
+  
   private lazy var availableRange: ClosedRange = minValue...maxValue
   
   // MARK: - Properties
@@ -30,14 +32,6 @@ extension AlphaModel {
     if isValidRange(value) {
       alpha = value
     }
-  }
-  
-  func plusAlpha() {
-    if isValidRange(alpha+1) { alpha += 1 }
-  }
-  
-  func minusAlpha() {
-    if isValidRange(alpha-1) { alpha -= 1 }
   }
 }
 

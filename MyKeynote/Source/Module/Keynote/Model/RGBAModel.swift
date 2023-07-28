@@ -48,14 +48,6 @@ extension RGBAModel {
     alpha.setAlpha(with: alphaValue)
   }
   
-  func plusAlpha() {
-    alpha.plusAlpha()
-  }
-  
-  func minusAlpha() {
-    alpha.minusAlpha()
-  }
-  
   var alphaValue: UInt8 {
     alpha.alpha
   }
