@@ -29,7 +29,6 @@ final class SlideThumbnailView: UIView {
   override init(frame: CGRect) {
     super.init(frame: frame)
     layer.cornerRadius = Constant.corderRadius
-    //backgroundColor = .lightGray.withAlphaComponent(0.5)
     translatesAutoresizingMaskIntoConstraints = false
     setupSubviewUI(with: imageView)
   }
