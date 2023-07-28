@@ -14,7 +14,8 @@ class KeynoteViewController: UIViewController {
   private var keynoteView: KeynoteView! 
   
   // MARK: - Properties
-  private var slideManager: (SlideManagerType & KeynoteViewAdapterDataSource & SlideModelAccessable)!
+  private var slideManager: (
+    SlideManagerType & KeynoteViewAdapterDataSource)!
   
   private let appear = PassthroughSubject<Void,Never>()
   
@@ -26,7 +27,9 @@ class KeynoteViewController: UIViewController {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
   }
   // MARK: - Lifecycle
-  init(slideManager: SlideManagerType & KeynoteViewAdapterDataSource & SlideModelAccessable) {
+  init(slideManager:
+       SlideManagerType & KeynoteViewAdapterDataSource
+  ) {
     super.init(nibName: nil, bundle: nil)
     self.slideManager = slideManager
   }
