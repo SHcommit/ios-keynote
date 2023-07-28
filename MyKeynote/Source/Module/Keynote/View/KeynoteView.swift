@@ -28,7 +28,7 @@ final class KeynoteView: UIView {
   // MARK: - UI Properties
   private let slideMenuView = SlideMenuView()
   
-  private var slideDetailView = SlideDetailView()
+  private var slideMenuDetailView = SlideMenuDetailView()
   
   // MARK: - Properties
   var slideMenuViewDataSource: UITableViewDataSource? {
@@ -47,22 +47,6 @@ final class KeynoteView: UIView {
     }
   }
   
-  var slideDatailViewDataSource: UITableViewDataSource? {
-    get {
-      slideDetailView.dataSource
-    } set {
-      slideDetailView.dataSource = newValue
-    }
-  }
-  
-  var slideDetailViewDelegate: UITableViewDelegate? {
-    get {
-      slideDetailView.delegate
-    } set {
-      slideDetailView.delegate = newValue
-    }
-  }
-  
   // MARK: - Lifecycle
   private override init(frame: CGRect) {
     super.init(frame: frame)
@@ -73,25 +57,11 @@ final class KeynoteView: UIView {
   convenience init(layoutFrom superView: UIView) {
     self.init(frame: .zero)
     setLayout(from: superView)
-    layoutIfNeeded()
-    setupSubviewUI(with: slideMenuView, slideDetailView)
-    slideDetailView.rowHeight = bounds.height - UIView.statusBarHeight*2
+    setupSubviewUI(with: slideMenuView, slideMenuDetailView)
   }
   
   required init?(coder: NSCoder) {
     super.init(coder: coder)
-  }
-}
-
-// MARK: - Helper
-extension KeynoteView {
-  func setInitialTableViews() {
-    let indexPath = IndexPath(row: 0, section: 0)
-    guard let cell = slideMenuView.cellForRow(at: indexPath) as? SlideMenuViewCell else {
-      return
-    }
-    cell.setImageViewBG(with: true)
-    slideMenuView.reloadRows(at: [indexPath], with: .automatic)
   }
 }
 
@@ -109,13 +79,8 @@ private extension KeynoteView {
 
 // MARK: - KeynoteViewAdapterDelegate
 extension KeynoteView: KeynoteViewAdapterDelegate {
-  func scrollToRow(with indexPath: IndexPath, rectInfo: RectModel) {
-    guard
-      let cell = slideDetailView.cellForRow(at: indexPath) as? SlideDetailViewCell
-    else { return }
-    cell.prepareForReuse()
-    cell.configure(with: .init(state: .rect(rectInfo)))
-    slideDetailView.selectRow(at: indexPath, animated: false, scrollPosition: .top)
+  func updateSlideView(with indexPath: IndexPath, rectInfo: RectModel) {
+    slideMenuDetailView.configure(with: .init(rectModel: rectInfo))
   }
 }
 
@@ -123,7 +88,7 @@ extension KeynoteView: KeynoteViewAdapterDelegate {
 extension KeynoteView: LayoutSupport {
   func setConstraints() {
     _=[slideMenuViewConstraints,
-       slideDetailViewConstraints]
+       slideMenuDetailViewConstraints]
       .map {
         NSLayoutConstraint.activate($0)
       }
@@ -140,14 +105,11 @@ extension KeynoteView: LayoutSupport {
       equalToConstant: Constant.SlideMenuView.width)]
   }
   
-  private var slideDetailViewConstraints: [NSLayoutConstraint] {
-    [slideDetailView.leadingAnchor.constraint(
+  private var slideMenuDetailViewConstraints: [NSLayoutConstraint] {
+    [slideMenuDetailView.leadingAnchor.constraint(
       equalTo: slideMenuView.trailingAnchor),
-     slideDetailView.topAnchor.constraint(
-      equalTo: topAnchor),
-     slideDetailView.trailingAnchor.constraint(
-      equalTo: trailingAnchor),
-     slideDetailView.bottomAnchor.constraint(
-      equalTo: bottomAnchor)]
+     slideMenuDetailView.topAnchor.constraint(equalTo: topAnchor),
+     slideMenuDetailView.trailingAnchor.constraint(equalTo: trailingAnchor),
+     slideMenuDetailView.bottomAnchor.constraint(equalTo: bottomAnchor)]
   }
 }
