@@ -7,5 +7,5 @@
 
 protocol KeynoteSlideMenuDataSource: AnyObject {
   var numberOfItems: Int { get }
-  func cellItem(at index: Int) -> SlideModel
+  func cellItem(at index: Int) -> SlideType
 }

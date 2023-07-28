@@ -68,16 +68,17 @@ private extension KeynoteViewAdapter {
       cell.setImageViewBG(with: true)
       guard let detailItem = dataSource?
         .slideDetailViewCellItem(at: 0)
-        .getinstance as? RectModel
       else {
         return
       }
-      delegate?.updateSlideView(
-        with: .init(row: 0, section: 0),
-        rectInfo: detailItem)
+    switch detailItem.state {
+    case .rect(let rectMdoel):
+      delegate?.updateSlideView(with:.init(row: 0, section: 0) , rectInfo: rectMdoel)
+    case .image(_):
+      break
+    }
   }
 }
-
 
 // MARK: - UITableViewDelegate
 extension KeynoteViewAdapter: UITableViewDelegate {
@@ -91,14 +92,20 @@ extension KeynoteViewAdapter: UITableViewDelegate {
     guard
       let prevCell = slideMenuView.cellForRow(at: prevSelectedIndexPath) as? SlideMenuViewCell,
       let curCell = slideMenuView.cellForRow(at: indexPath) as? SlideMenuViewCell,
-      let rectInfo = dataSource?.slideDetailViewCellItem(at: indexPath.row).getinstance as? RectModel
+      let rectInfo = dataSource?
+        .slideDetailViewCellItem(at: indexPath.row)
     else {
       return
     }
     prevCell.setImageViewBG(with: false)
-    delegate?.updateSlideView(with: indexPath,rectInfo: rectInfo)
+    switch rectInfo.state {
+    case .rect(let rectModel):
+      delegate?.updateSlideView(with: indexPath, rectInfo: rectModel)
+    case .image(let image):
+      break
+    }
     
-    // TODO: - prevSelectedIdx, curSelectedIdx같으면 슬라이드 내용 히든
+    // TODO: - prevSelectedIdx, curSelectedIdx같으면 슬라이드 내용 히든, curCell selected state cancel!!
     prevSelectedIndexPath = indexPath
     curCell.setImageViewBG(with: true)
   }

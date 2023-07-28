@@ -10,7 +10,7 @@ protocol KeynoteViewAdapterDataSource: AnyObject {
   
   func slideDetailViewCellItem(
     at index: Int
-  ) -> SlideModel
+  ) -> SlideType
   
   func SlideMenuViewCellItem(
     at index: Int
