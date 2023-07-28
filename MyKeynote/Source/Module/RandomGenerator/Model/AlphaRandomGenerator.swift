@@ -8,9 +8,11 @@
 final class AlphaRandomGenerator: RandomGeneratable {
   // MARK: - Constant
   typealias RandomValueType = UInt8
+  
   typealias Constant = AppSetting.UIConstAlpha
   
   // MARK: - Properties
   private(set) var minValue: RandomValueType = Constant.minAlpha
+  
   private(set) var maxValue: RandomValueType = Constant.maxAlpha
 }

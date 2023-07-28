@@ -86,10 +86,8 @@ extension KeynoteViewAdapter: UITableViewDelegate {
     _ tableView: UITableView,
     didSelectRowAt indexPath: IndexPath
   ) {
-    guard let slideMenuView = tableView as? SlideMenuView else {
-      return
-    }
     guard
+      let slideMenuView = tableView as? SlideMenuView,
       let prevCell = slideMenuView.cellForRow(at: prevSelectedIndexPath) as? SlideMenuViewCell,
       let curCell = slideMenuView.cellForRow(at: indexPath) as? SlideMenuViewCell,
       let rectInfo = dataSource?
@@ -101,11 +99,12 @@ extension KeynoteViewAdapter: UITableViewDelegate {
     switch rectInfo.state {
     case .rect(let rectModel):
       delegate?.updateSlideView(with: indexPath, rectInfo: rectModel)
-    case .image(let image):
+    case .image(_):
+      // TODO: - 이미지 cell을 추가한다면, delegate로 전달.
       break
     }
     
-    // TODO: - prevSelectedIdx, curSelectedIdx같으면 슬라이드 내용 히든, curCell selected state cancel!!
+    // TODO: - prevSelectedIdx, curSelectedIdx같으면 슬라이드 내용 히든, curCell selected state cancel 해야 함.
     prevSelectedIndexPath = indexPath
     curCell.setImageViewBG(with: true)
   }

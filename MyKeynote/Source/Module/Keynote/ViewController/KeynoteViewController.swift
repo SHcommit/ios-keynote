@@ -36,6 +36,7 @@ class KeynoteViewController: UIViewController {
   
   required init?(coder: NSCoder) {
     super.init(coder: coder)
+    // TODO: - SlideManager 인스턴스 할당받아야 합니다!!
   }
   
   override func viewDidLoad() {

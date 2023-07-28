@@ -8,10 +8,12 @@
 final class UniqueIDRandomGenerator: RandomGeneratable {
   // MARK: - Constant
   typealias RandomValueType = String
+  
   typealias Constant = AppSetting.UIConstUId
   
   // MARK: - Properties
   private(set) var minValue:  RandomValueType = "0"
+  
   private(set) var maxValue: RandomValueType = "z"
 }
 

@@ -61,9 +61,7 @@ extension SlideManager {
       from: rectModelFactory)
     let rgb = rectModelFactory.makeRGBRandomValue()
     let alpha: UInt8 = 10
-    
     let alphaModel = AlphaModel(alpha: alpha)
-    
     let rgbaModel = RGBAModel(
       red: rgb.R,
       green: rgb.G,
