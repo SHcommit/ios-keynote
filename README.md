@@ -83,6 +83,8 @@ Swift Factory pattern <a href="https://i-colours-u.tistory.com/39?category=10049
 
 - 테이블 뷰 재사용 큐 관련 흥미 진진한.. 실험을 진행했습니다. (<a href="https://dev-with-precious-dreams.tistory.com/">포스트 링크</a>)
 - MVVM 패턴의 개념 MVC와 차이점 정리
+<img width="700" alt="스크린샷 2023-07-28 오후 1 40 56" src="https://github.com/SHcommit/ios-keynote/assets/96910404/9e36a503-83b3-4103-9726-a1482fc6dcb0">
+
 - protocol any, some, composition 개념 공부
 
 [공부해야 할 리스트]
