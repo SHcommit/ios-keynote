@@ -47,7 +47,7 @@ extension SlideDetailContentView {
     let userInfoKey = AlphaView.Constant.Stepper.notificatonCenterPostKey
     guard
       let userInfo = notification.userInfo,
-      let (alpha, _) = userInfo[userInfoKey] as? (alpha: Int, indexPath: IndexPath)
+      let (alpha, _) = userInfo[userInfoKey] as? (alpha: Int, uniqueId: String)
     else {
       return
     }
@@ -57,7 +57,7 @@ extension SlideDetailContentView {
 
 // MARK: - Helper
 extension SlideDetailContentView{
-  func configure(with data: SlideModel) {
+  func configure(with data: SlideType) {
     switch data.state {
     case .rect(let rectModel):
       guard let rectView = rectView else { return }
@@ -67,10 +67,11 @@ extension SlideDetailContentView{
           rectViewContraints(with: rectModel))
         bind()
       }
-      setRectViewAlpah(with: rectModel.alpha)
-      setRectViewColor(with: UIColor(with: rectModel.rgb, alpha: rectModel.alpha))
+      setRectViewAlpah(with: rectModel.alpha/10.0)
+      setRectViewColor(with: UIColor(with: rectModel.rgb, alpha: (rectModel.alpha)/10.0))
       let rectSize = CGSize(width: rectModel.width, height: rectModel.width)
       setRectViewSize(with: rectSize)
+      
     default:
       break
     }

@@ -29,7 +29,7 @@ final class SlideDetailContainerView: UIView {
 
 // MARK: - Helper
 extension SlideDetailContainerView {
-  func configure(with model: SlideModel) {
+  func configure(with model: SlideType) {
     slideView.configure(with: model)
   }
   

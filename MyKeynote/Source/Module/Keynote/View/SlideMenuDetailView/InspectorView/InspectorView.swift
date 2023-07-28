@@ -72,18 +72,9 @@ final class InspectorView: UIView {
       weight: .regular)
   }
   
-  private lazy var alphaView = AlphaView(indexPath: indexPath)
+  private lazy var alphaView = AlphaView()
   
-  // MARK: - Properties
-  var indexPath: IndexPath {
-    guard
-      let cell = superview as? UITableViewCell,
-      let tableView = superview?.superview as? UITableView
-    else {
-      return .init(row: 0, section: 0)
-    }
-    return tableView.indexPath(for: cell) ?? .init(row: 0, section: 0)
-  }
+  private var uniqueId: String = ""
   
   // MARK: - Lifecycle
   override init(frame: CGRect) {
@@ -119,7 +110,7 @@ extension InspectorView {
     let userInfoKey = AlphaView.Constant.Stepper.notificatonCenterPostKey
     guard
       let userInfo = notification.userInfo,
-      let message = userInfo[userInfoKey] as? (alpha: Int, indexPath: IndexPath)
+      let message = userInfo[userInfoKey] as? (alpha: Int, uniqueId: String)
     else {
       return
     }
@@ -129,17 +120,14 @@ extension InspectorView {
 
 // MARK: - Helper
 extension InspectorView {
-  func configure(with alpha: Double, color: UIColor) {
-    let alphaStr = String(Int(alpha))
+  func configure(with alpha: Double, color: UIColor, uniqueId: String) {
+    self.uniqueId = uniqueId
     let types: [setBGColorStateTypes] = [
       .setRectColorHexLabelColor(color),
       .setRectColorHexLabelBgAlpha(alpha),
       .setRectColorHexLabelText(color.toHexString())]
-    
-    _=types.map {
-      setBgColorStateView(with: $0)
-    }
-  setAlphaViewAlphaValueState(with: alphaStr)
+    _=types.map { setBgColorStateView(with: $0) }
+    alphaView.configure(with: alpha, uniqueId: uniqueId)
   }
   
   func setBgColorStateView(with type: setBGColorStateTypes) {
@@ -157,7 +145,6 @@ extension InspectorView {
     rectColorHexLabel.text = ""
     rectColorHexLabel.backgroundColor = .white
     alphaView.setStateView(with: "")
-    
   }
 }
 

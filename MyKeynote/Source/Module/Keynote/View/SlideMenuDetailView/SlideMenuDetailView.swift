@@ -47,13 +47,15 @@ extension SlideMenuDetailView {
     slideContainerView.prepareSlideView()
   }
   
-  func configure(with model: SlideModel) {
+  func configure(with model: SlideType) {
     switch model.state {
     case .rect(let rectModel):
-      print(rectModel.description)
       inspectorView.configure(
-        with: rectModel.alpha,
-        color: UIColor(with: rectModel.rgb, alpha: rectModel.alpha))
+        with: rectModel.alpha/10.0,
+        color: UIColor(
+          with: rectModel.rgb,
+          alpha: rectModel.alpha/10.0),
+        uniqueId: rectModel.uniqueID)
       slideContainerView.configure(with: model)
     case .image(let imageStr):
       // TODO: - image config impl..

@@ -22,40 +22,20 @@ final class AlphaView: UIView {
   // MARK: - UI Properties
   private let stateView = AlphaStateView()
   
-  private lazy var stepper: UIStepper = UIStepper().set {
-    $0.translatesAutoresizingMaskIntoConstraints = false
-    $0.value = Constant.Stepper.maxValue
-    $0.minimumValue = Constant.Stepper.minValue
-    $0.maximumValue = Constant.Stepper.maxValue
-    $0.wraps = false
-    $0.addTarget(
-      self,
-      action: #selector(didChangedStepperValue),
-      for: .valueChanged)
-  }
+  private var stepper: UIStepper!
   
   // MARK: - Properties
-  private var indexPath: IndexPath!
+  private var uniqueId: String?
   
   // MARK: - Lifecycle
   private override init(frame: CGRect) {
     super.init(frame: frame)
     translatesAutoresizingMaskIntoConstraints = false
+    stepper = makeStepper()
     setupSubviewUI(with: stateView, stepper)
   }
-  
-  init(frame: CGRect, indexPath: IndexPath) {
-    self.indexPath = indexPath
-    super.init(frame: frame)
-    translatesAutoresizingMaskIntoConstraints = false
-    setupSubviewUI(with: stateView, stepper)
-  }
-  
-  convenience init(indexPath: IndexPath) {
-    self.init(frame: .zero, indexPath: indexPath)
-  }
-  
   required init?(coder: NSCoder) {
+    uniqueId = ""
     super.init(coder: coder)
   }
 }
@@ -71,8 +51,27 @@ extension AlphaView {
 
 // MARK: - Helper
 extension AlphaView {
+  func configure(with alpha: Double, uniqueId: String) {
+    let alphaStr = String(Int(alpha*10))
+    setStateView(with: alphaStr)
+    setUniqueId(with: uniqueId)
+    setStepper(with: Double(alpha*10)) 
+  }
+  
   func setStateView(with text: String) {
     stateView.setStateLabel(with: text)
+  }
+  
+  func setUniqueId(with uniqueId: String) {
+    self.uniqueId = uniqueId
+    stepper.addTarget(
+      self,
+      action: #selector(didChangedStepperValue),
+      for: .valueChanged)
+  }
+  
+  func setStepper(with alphaValue: Double) {
+    stepper.value = alphaValue
   }
 }
 
@@ -83,12 +82,22 @@ private extension AlphaView {
       .Stepper
       .notificatonCenterPostKey
 
-    let userInfo: [some Hashable: (alpha: Int, indexPath: IndexPath)] = [key: (alpha, indexPath)]
+    let userInfo: [some Hashable: (alpha: Int, uniqueId: String)] = [key: (alpha, uniqueId ?? "")]
     
     NotificationCenter.default.post(
       name: .AlphaViewStepperValueChanged,
       object: nil,
       userInfo: userInfo)
+  }
+  
+  func makeStepper() -> UIStepper {
+    return UIStepper().set {
+      $0.translatesAutoresizingMaskIntoConstraints = false
+      $0.value = Constant.Stepper.maxValue
+      $0.minimumValue = Constant.Stepper.minValue
+      $0.maximumValue = Constant.Stepper.maxValue
+      $0.wraps = false
+    }
   }
 }
 
