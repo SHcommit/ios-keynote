@@ -19,7 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     let rectModelFactory = RectModelFactory()
     let sm = SlideManager(rectModelFactory: rectModelFactory)
     let models = (0..<7)
-      .map {_ in return SlideModel(state: .rect(sm.makeRectModel())) }
+      .map {_ in return SlideType(rectModel: sm.makeRectModel()) }
     models.forEach{ sm.add($0) }
     
     window?.rootViewController = KeynoteViewController(slideManager: sm)
